@@ -1,0 +1,35 @@
+{
+    "name": "hrevert/ht-profile-image",
+    "description": "A Zend framework module which adds profile image upload functionality to ZfcUser",
+    "type": "library",
+    "keywords": [
+        "zf2",
+        "module",
+        "zendframework"
+    ],
+    "homepage": "https://github.com/hrevert/HtProfileImage",
+    "authors": [
+        {
+            "name": "Hrevert Technologies",
+            "email": "info@hrevert.com"
+        },
+        {
+            "name": "ojhaujjwal",
+            "email": "bring2uo@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.*",
+        "zf-commons/zfc-user": "0.1.2"
+        "ujjwal/h-commons": "1.*",
+    },
+    "autoload": {
+        "psr-0": {
+            "HtProfileImage": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
