@@ -4,7 +4,7 @@ namespace HtProfileImage\View\Helper;
 
 use HtProfileImage\Options\DisplayOptionsInterface;
 use Zend\View\Helper\Gravatar;
-use ZfcUser\Mapper\UserMapper;
+use ZfcUser\Mapper\User as UserMapper;
 use HtProfileImage\Model\StorageModel;
 
 class ProfileImage extends Gravatar
@@ -103,15 +103,33 @@ class ProfileImage extends Gravatar
 
         $id = $user->getId();
         if(!$this->getStorageModel()->userImageExists($id) && $this->getDisplayOptions()->getEnableGravatarAlternative()) {
-            $url = $this->getView()->gravatar($user->getEmail(), $options, $attribs);
+            
+            return $this->getView()->gravatar($user->getEmail(), $options, $attribs);
         } else {
-            $url = $this->getView()->url('zfcuser/htimagedisplay', array('id' => $user->getId(), 'size' => $size, 'gender' => $user->getGender()));
+            $params = array('id' => $user->getId(), 'size' => $size);
+            if (method_exists($user, 'getGender')) {
+                $params['gender'] = $user->getGender();
+            }
+            $url = $this->getView()->url('zfcuser/htimagedisplay', $params);
         }
         $this->setAttribs(array(
             'style' => "width:$size;height:$size;",
             'src' => $url
         ));
-
         return $this;
+    }
+
+    /**
+     * Return valid image tag
+     *
+     * @return string
+     */
+    public function getImgTag()
+    {
+        $html = '<img'
+            . $this->htmlAttribs($this->getAttribs())
+            . $this->getClosingBracket();
+
+        return $html;
     }
 }

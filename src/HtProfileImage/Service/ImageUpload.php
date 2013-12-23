@@ -3,11 +3,13 @@
 namespace HtProfileImage\Service;
 
 use ZfcUser\Entity\User;
-use HtProfieImage\Form\ProfileImageForm;
+use HtProfileImage\Form\ProfileImageForm;
+use HtProfileImage\Form\ProfileImageInputFilter;
+use HtProfileImage\Form\ProfileImageValidator;
 
 class ImageUpload
 {
-    use \Zend\ServiceManger\ServiceLocatorAwareTrait;
+    use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
     public function uploadImage(User $user, ProfileImageForm $form, array $files)
     {
@@ -15,24 +17,24 @@ class ImageUpload
         $form->setData($files);
         $form->setInputFilter($validator);
         if ($form->isValid()) {
-            $moduleOptions = $this->getServiceLocator()->get('HtProfieImage\ModuleOptions');
+            $moduleOptions = $this->getServiceLocator()->get('HtProfileImage\ModuleOptions');
             $inputFilter = new ProfileImageInputFilter($moduleOptions->getUploadDirectory());
-            $inputFilter->init();
             $inputFilter->setUser($user);
+            $inputFilter->init();
             $form->setInputFilter($inputFilter);
             $result = $form->isValid();
-            try {
+            //try {
                 $thumbnailer = $this->getServiceLocator()->get('WebinoImageThumb');
-                $file = $inputFilter->getTarget();
+                $file = $inputFilter->getUploadTarget();
                 $thumb = $thumbnailer->create($file);
-                $newFileName = $this->getServiceLocator()->get('HtProfieImage\StorageModel')->getUserImage($user->getId());
-                $thumb->cropFromCenter($moduleOptions->getStoredImageSize())
+                $newFileName = $this->getServiceLocator()->get('HtProfileImage\StorageModel')->getUserImage($user->getId());
+                $thumb->cropFromCenter($moduleOptions->getStoredImageSize());
                 $thumb->save($newFileName); 
                 unlink($file);
                 return true;           
-            } catch (\Exception $e) {
+            //} catch (\Exception $e) {
                 
-            }
+            //}
            
         }
         return false;        

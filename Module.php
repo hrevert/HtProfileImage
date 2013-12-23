@@ -3,6 +3,7 @@
 namespace HtProfileImage;
 
 use HtProfileImage\Form\GenderForm;
+use Zend\Mvc\MvcEvent;
 
 class Module
 {
@@ -51,22 +52,31 @@ class Module
                 },
                 'HtProfileImage\StorageModel' => function ($sm) {
                     $storageModel = new Model\StorageModel($sm->get('HtProfileImage\ModuleOptions'));
+                    return $storageModel;
+                },
+                'HtProfileImage\ImageUploadService' => function ($sm) {
+                    $service = new Service\ImageUpload();
+                    $service->setServiceLocator($sm);
+                    return $service;
                 }
             )
         );
     }
-    ;
+    
+
     public function getViewHelperConfig()
     {
         return array(
-            'htProfileImage' => function ($sm) {
-                $htProfileImage = new View\Helper\ProfileImage();
-                $serviceLocator = $sm->getLocator();
-                $htProfileImage->setUserMapper($serviceLocator->get('zfcuser_user_mapper'));
-                $htProfileImage->setDisplayOptions($serviceLocator->get('HtProfileImage\ModuleOptions'));
-                $htProfileImage->setStorageModel($serviceLocator->get('HtProfileImage\StorageModel'));
-                return $htProfileImage;
-            }
+            'factories' => array(
+                'htProfileImage' => function ($sm) {
+                    $htProfileImage = new View\Helper\ProfileImage();
+                    $serviceLocator = $sm->getServiceLocator();
+                    $htProfileImage->setUserMapper($serviceLocator->get('zfcuser_user_mapper'));
+                    $htProfileImage->setDisplayOptions($serviceLocator->get('HtProfileImage\ModuleOptions'));
+                    $htProfileImage->setStorageModel($serviceLocator->get('HtProfileImage\StorageModel'));
+                    return $htProfileImage;
+                }            
+            )
         );
     }
 }

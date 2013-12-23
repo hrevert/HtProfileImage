@@ -3,7 +3,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'HtProfieImage\HtProfieImage' => 'HtProfieImage\Controller\HtProfieImageController'
+            'HtProfileImage\HtProfileImage' => 'HtProfileImage\Controller\HtProfileImageController'
         ),
     ),
     'router' => array(
@@ -15,7 +15,7 @@ return array(
                         'options' => array(
                             'route' => '/upload-image',
                             'defaults' => array(
-                                'controller' => 'HtProfieImage\HtProfieImage',
+                                'controller' => 'HtProfileImage\HtProfileImage',
                                 'action' => 'profile'
                             )
                         )
@@ -25,7 +25,7 @@ return array(
                         'options' => array(
                             'route' => '/display-image/:id/[:size/][:gender/]',
                             'defaults' => array(
-                                'controller' => 'HtProfieImage\HtProfieImage',
+                                'controller' => 'HtProfileImage\HtProfileImage',
                                 'action' => 'display-image'
                             )
                         )
@@ -33,5 +33,13 @@ return array(
                 )
             )
         )
-    )
+    ),
+    'view_manager' => array(
+        'template_path_stack' => array(
+            'HtProfileImage' => __DIR__ . '/../view',
+        ),
+        'template_map' => array(
+            'zfc-user/user/index' =>  __DIR__ . '/../view/zfc-user/user/index.phtml'
+        )
+    ),
 );

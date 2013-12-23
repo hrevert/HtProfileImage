@@ -1,0 +1,1 @@
+﻿ALTER TABLE `user` ADD COLUMN `gender` DECIMAL(1,0) NOT NULL DEFAULT 1  AFTER `state` ;

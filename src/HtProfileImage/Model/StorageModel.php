@@ -53,7 +53,7 @@ class StorageModel
     public function deleteUserImage($id)
     {
         $file = $this->getUserImage($id);
-        if (is_readable($file) {
+        if (is_readable($file)) {
             unlink($file);
         }
     }

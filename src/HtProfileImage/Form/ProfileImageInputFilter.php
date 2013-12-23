@@ -1,6 +1,6 @@
 <?php
     
-namespace HtProfieImage\Form;
+namespace HtProfileImage\Form;
 
 use Zend\InputFilter\InputFilter;
 use ZfcUser\Entity\User;
