@@ -4,21 +4,27 @@ namespace HtProfileImage\Options;
 
 use Zend\Stdlib\AbstractOptions;
 
-class ModuleOptions extends AbstractOptions
+class ModuleOptions extends AbstractOptions implements 
+    StorageOptionsInterface, 
+    DisplayOptionsInterface
 {
     protected $uploadDirectory = "data/uploads/profile-images";
 
-    protected $defaultImageSize = 100;
+    protected $defaultImageSize = 80;
 
-    protected $storedImageSize = 160;
+    protected $storedImageSize = 200;
 
-    protected $enableGender = true;
+    protected $enableGender = false;
 
     protected $defaultImage;
 
     protected $maleImage;
 
     protected $femaleImage;
+
+    protected $enableGravatarAlternative = true;
+
+    protected $serveCroppedImage  = true;
 
     public function setUploadDirectory($uploadDirectory)
     {
@@ -52,7 +58,7 @@ class ModuleOptions extends AbstractOptions
 
     public function setEnableGender($enableGender)
     {
-        $this->enableGender = $enableGender;
+        $this->enableGender = (bool) $enableGender;
     }
 
     public function getEnableGender()
@@ -89,5 +95,24 @@ class ModuleOptions extends AbstractOptions
     {
         return $this->femaleImage;
     }
-}
 
+    public function getEnableGravatarAlternative()
+    {
+        return $this->enableGravatarAlternative;
+    }
+
+    public function setEnableGravatarAlternative($enableGravatarAlternative) 
+    {
+        $this->enableGravatarAlternative = (bool) $enableGravatarAlternative;
+    }
+
+    public function setServeCroppedImage($serveCroppedImage)
+    {
+        $this->serveCroppedImage = $serveCroppedImage;
+    }
+
+    public function getServeCroppedImage()
+    {
+        return $this->serveCroppedImage;
+    }
+}

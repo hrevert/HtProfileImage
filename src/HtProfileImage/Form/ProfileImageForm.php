@@ -3,7 +3,7 @@
 namespace HtProfileImage\Form;
 
 use Zend\Form\Form;
-use ZfcBase\Form\ProfileImageValidator;
+use ZfcBase\Form\ProvidesEventsForm;
 
 class ProfileImageForm extends ProvidesEventsForm
 {

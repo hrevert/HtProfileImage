@@ -23,6 +23,7 @@
         "zendframework/zendframework": "2.*",
         "zf-commons/zfc-user": "0.1.2",
         "ujjwal/h-commons": "1.*",
+        "webino/webino-image-thumb": "2.*"
     },
     "autoload": {
         "psr-0": {

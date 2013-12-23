@@ -48,13 +48,25 @@ class Module
                 'HtProfileImage\ModuleOptions' => function ($sm) {
                     $config = $sm->get('Config');
                     return new Options\ModuleOptions(isset($config['htprofileimage']) ? $config['htprofileimage'] : array());
+                },
+                'HtProfileImage\StorageModel' => function ($sm) {
+                    $storageModel = new Model\StorageModel($sm->get('HtProfileImage\ModuleOptions'));
                 }
             )
         );
     }
-
+    ;
     public function getViewHelperConfig()
     {
-        return array();
+        return array(
+            'htProfileImage' => function ($sm) {
+                $htProfileImage = new View\Helper\ProfileImage();
+                $serviceLocator = $sm->getLocator();
+                $htProfileImage->setUserMapper($serviceLocator->get('zfcuser_user_mapper'));
+                $htProfileImage->setDisplayOptions($serviceLocator->get('HtProfileImage\ModuleOptions'));
+                $htProfileImage->setStorageModel($serviceLocator->get('HtProfileImage\StorageModel'));
+                return $htProfileImage;
+            }
+        );
     }
 }
