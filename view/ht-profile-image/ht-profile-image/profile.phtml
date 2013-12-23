@@ -1,0 +1,13 @@
+<?php
+
+$title = 'Image Upload - ' . $user->getName();
+$title = $this->escapeHtml($title);
+$this->headTitle($title);
+$form->prepare();
+?>
+<h2><?php echo $title; ?></h2>
+<?php echo $this->form()->openTag($form); ?>
+<?php echo $this->formElement($form->get('image')) . $this->formElementErrors($form->get('image')); ?>
+<br/>
+<?php echo $this->formElement($form->get('submit')); ?>
+<?php echo $this->form()->closeTag($form); ?>
