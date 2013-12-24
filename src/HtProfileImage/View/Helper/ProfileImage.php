@@ -6,9 +6,11 @@ use HtProfileImage\Options\DisplayOptionsInterface;
 use Zend\View\Helper\Gravatar;
 use ZfcUser\Mapper\User as UserMapper;
 use HtProfileImage\Model\StorageModel;
+use ZfcUser\Entity\User;
 
 class ProfileImage extends Gravatar
 {
+
 
     /**
     * @var DisplayOptionsInterface
@@ -30,6 +32,12 @@ class ProfileImage extends Gravatar
     */
     protected $storageModel;
 
+
+    public function __construct(DisplayOptionsInterface $displayOptions)
+    {
+        $this->displayOptions = $displayOptions;
+    }
+
     /**
     * set StorageModel 
     * @param $storageModel StorageModel
@@ -42,11 +50,6 @@ class ProfileImage extends Gravatar
     public function getStorageModel()
     {
         return $this->storageModel;
-    }
-
-    public function setDisplayOptions(DisplayOptionsInterface $displayOptions)
-    {
-        $this->displayOptions = $displayOptions;
     }
 
     public function getDisplayOptions()
@@ -75,41 +78,51 @@ class ProfileImage extends Gravatar
         return $this->retrievedUsers[$id];
     }
 
+    protected function setUser(User $user)
+    {
+        $id = $user->getId();
+        $this->retrievedUsers[$id] = $user;
+    }
+
     public function __invoke($user, $options = array(), $attribs = array())
     {
         if (!isset($options['img_size'])) {
             $size = $this->getDisplayOptions()->getDefaultImageSize();
+            $options['img_size'] = $size;
         } else {
             $size = $options['img_size'];
         }
-        if (!empty($options)) {
-            $this->setOptions($options);
-        }
+        $this->setOptions($options);
         if (!empty($attribs)) {
             $this->setAttribs($attribs);
         }
         if (is_string($user) || is_int($user)) {
             $id = $user;
-            $user = $this->getUser($id);
-            if (!$user) {
+        } elseif($user instanceof User) {
+            $id = $user->getId();
+            $this->setUser($user);
+        } else {
                 throw new \InvalidArgumentException(
                     sprintf(
                         "%s expects an instance of ZfcUser\Entity\User or user_id as 1st argument",
                         __METHOD__
                     )
-                );
-            }
+                );            
         }
 
-        $id = $user->getId();
+        
         if(!$this->getStorageModel()->userImageExists($id) && $this->getDisplayOptions()->getEnableGravatarAlternative()) {
-            
-            return $this->getView()->gravatar($user->getEmail(), $options, $attribs);
+            $user = $this->getUser($id);
+            $this->setEmail($user->getEmail());
+            $url = $this->getAvatarUrl();
         } else {
-            $params = array('id' => $user->getId(), 'size' => $size);
-            if (method_exists($user, 'getGender')) {
-                $params['gender'] = $user->getGender();
+            if ($this->getDisplayOptions()->getEnableGender()) {
+                $user = $this->getUser($id);
+                if (method_exists($user, 'getGender')) {
+                    $params['gender'] = $user->getGender();
+                }
             }
+            $params = array('id' => $id, 'size' => $size);
             $url = $this->getView()->url('zfcuser/htimagedisplay', $params);
         }
         $this->setAttribs(array(

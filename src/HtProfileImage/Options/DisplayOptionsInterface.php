@@ -12,6 +12,10 @@ interface DisplayOptionsInterface
 
     public function setEnableGravatarAlternative($enableGravatarAlternative);
 
+    public function setEnableGender($enableGender);
+
+    public function getEnableGender();
+
     /*
     public function setServeCroppedImage($serveCroppedImage);
 

@@ -69,10 +69,10 @@ class Module
         return array(
             'factories' => array(
                 'htProfileImage' => function ($sm) {
-                    $htProfileImage = new View\Helper\ProfileImage();
                     $serviceLocator = $sm->getServiceLocator();
+                    $htProfileImage = new View\Helper\ProfileImage($serviceLocator->get('HtProfileImage\ModuleOptions'));
                     $htProfileImage->setUserMapper($serviceLocator->get('zfcuser_user_mapper'));
-                    $htProfileImage->setDisplayOptions($serviceLocator->get('HtProfileImage\ModuleOptions'));
+                    //$htProfileImage->setDisplayOptions($serviceLocator->get('HtProfileImage\ModuleOptions'));
                     $htProfileImage->setStorageModel($serviceLocator->get('HtProfileImage\StorageModel'));
                     return $htProfileImage;
                 }            

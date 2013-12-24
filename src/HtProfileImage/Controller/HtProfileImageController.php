@@ -80,7 +80,7 @@ class HtProfileImageController extends AbstractActionController
             $thumbnailer = $this->getServiceLocator()->get('WebinoImageThumb');
             $thumb = $thumbnailer->create($file);
             if (!$size) {
-                $size = $this->getServiceLocator()->get('HtProfileImage\ModuleOptions')->getDefaultSize();
+                $size = $this->getServiceLocator()->get('HtProfileImage\ModuleOptions')->getDefaultImageSize();
             }
             $thumb->resize($size, $size);
             $vm->setPhpThumb($thumb);
