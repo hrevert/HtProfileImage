@@ -82,7 +82,7 @@ class HtProfileImageController extends AbstractActionController
             if (!$size) {
                 $size = $this->getServiceLocator()->get('HtProfileImage\ModuleOptions')->getDefaultImageSize();
             }
-            $thumb->resize($size, $size);
+            $thumb->adaptiveResize($size, $size);
             $vm->setPhpThumb($thumb);
         } else {
             $vm->setFileName($file);

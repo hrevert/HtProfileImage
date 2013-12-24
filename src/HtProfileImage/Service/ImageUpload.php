@@ -28,7 +28,7 @@ class ImageUpload
                 $file = $inputFilter->getUploadTarget();
                 $thumb = $thumbnailer->create($file);
                 $newFileName = $this->getServiceLocator()->get('HtProfileImage\StorageModel')->getUserImage($user->getId());
-                $thumb->cropFromCenter($moduleOptions->getStoredImageSize());
+                $thumb->adaptiveResize($moduleOptions->getStoredImageSize());
                 $thumb->save($newFileName); 
                 unlink($file);
                 return true;           

@@ -126,7 +126,7 @@ class ProfileImage extends Gravatar
             $url = $this->getView()->url('zfcuser/htimagedisplay', $params);
         }
         $this->setAttribs(array(
-            'style' => "width:$size;height:$size;",
+            'style' => "width:$size".'px'.";height:$size".'px'.";",
             'src' => $url
         ));
         return $this;
