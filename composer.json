@@ -22,7 +22,11 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.*",
         "zf-commons/zfc-user": "0.1.2",
+<<<<<<< HEAD
         "ujjwal/h-commons": "1.2.1",
+=======
+        "ujjwal/h-commons": "1.2.2",
+>>>>>>> 53e9ef32617b8f6b369720c0c4f177aa99c9c18d
         "webino/webino-image-thumb": "dev-master"
     },
     "autoload": {
