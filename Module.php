@@ -19,7 +19,7 @@ class Module
         $eventManager = $app->getEventManager();
         $sharedManager = $eventManager->getSharedManager();
         if ($serviceManager->get("HtProfileImage\ModuleOptions")->getEnableGender()) {
-            $sharedManager->attach('ZfcUser\Form\Register', 'init', function ($e) use ($sm) {
+            $sharedManager->attach('ZfcUser\Form\Register', 'init', function ($e) {
                 $form = $e->getTarget();
                 $genderForm = new GenderForm();
                 $form->add($genderForm->get('gender'));

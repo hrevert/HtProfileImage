@@ -6,7 +6,7 @@ use HCommons\Model\GenderManager;
 
 class GenderForm
 {
-    public __construct()
+    public function __construct()
     {
         $this->add(array(
             'name' => 'gender',
