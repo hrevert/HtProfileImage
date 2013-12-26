@@ -3,8 +3,9 @@
 namespace HtProfileImage\Form;
 
 use HCommons\Model\GenderManager;
+use Zend\Form\Form;
 
-class GenderForm
+class GenderForm extends Form
 {
     public function __construct()
     {
