@@ -9,6 +9,7 @@ class GenderForm extends Form
 {
     public function __construct()
     {
+        parent::__construct();
         $this->add(array(
             'name' => 'gender',
             'type' => 'Select',
