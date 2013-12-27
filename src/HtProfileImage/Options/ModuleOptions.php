@@ -26,6 +26,8 @@ class ModuleOptions extends AbstractOptions implements
 
     protected $serveCroppedImage  = true;
 
+    protected $postUploadRoute = 'zfcuser';
+
     public function setUploadDirectory($uploadDirectory)
     {
         $this->uploadDirectory = $uploadDirectory;
@@ -114,5 +116,15 @@ class ModuleOptions extends AbstractOptions implements
     public function getServeCroppedImage()
     {
         return $this->serveCroppedImage;
+    }
+
+    public function setPostUploadRoute($postUploadRoute)
+    {
+        $this->postUploadRoute = $postUploadRoute;
+    }
+
+    public function getPostUploadRoute()
+    {
+        return $this->postUploadRoute;
     }
 }

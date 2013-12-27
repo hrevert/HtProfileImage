@@ -96,6 +96,15 @@ $settings = array(
      * Accepted values: boolean true or false
      */
     //'serve_cropped_image' => true
+
+    /**
+     * Post Upload Route
+     *
+     * Route to redirect after a user has uploaded his/her image 
+     * Default value: 'zfcuser'
+     * If set to null, user will not be redirected
+     */
+    //'post_upload_route' => 'zfcuser',
 );
 
 /**

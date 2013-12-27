@@ -6,6 +6,10 @@ $this->headTitle($title);
 $form->prepare();
 ?>
 <h2><?php echo $title; ?></h2>
+<?php if ($image_uploaded): ?>
+    <div class="alert alert-success">Image Successfully Uploaded</div>
+<?php endif; ?>
+<a href="<?php echo $this->url('zfcuser'); ?>" class="btn btn-default">Back to my Profile</a><br/><br/>
 <?php echo $this->form()->openTag($form); ?>
 <?php echo $this->formElement($form->get('image')) . $this->formElementErrors($form->get('image')); ?>
 <br/>

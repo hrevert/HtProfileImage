@@ -13,6 +13,7 @@ class HtProfileImageController extends AbstractActionController
     public function profileAction()
     {
         $user = $this->getServiceLocator()->get('zfcuser_auth_service')->getIdentity();
+        $options = $this->getServiceLocator()->get('HtProfileImage\ModuleOptions');
         $form = new ProfileImageForm();
         $request = $this->getRequest();
         $image_uploaded = false;
@@ -22,8 +23,9 @@ class HtProfileImageController extends AbstractActionController
                     return new Model\JsonModel(array(
                         'uploaded' => true
                     ));                    
+                } elseif ($options->getPostUploadRoute()) {
+                        return call_user_func_array(array($this->redirect(), 'toRoute'), (array) $options->getPostUploadRoute());
                 }
-                return $this->redirect()->toRoute('zfcuser'); 
                 $image_uploaded = true;
             } else {
                 if ($request->isXmlHttpRequest()) {
