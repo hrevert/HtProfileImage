@@ -11,4 +11,8 @@ interface StorageOptionsInterface
     public function setStoredImageSize($storedImageSize);
 
     public function getStoredImageSize();
+
+    public function setStorageResizer(array $storageResizer);
+
+    public function getStorageResizer();
 }

@@ -105,6 +105,38 @@ $settings = array(
      * If set to null, user will not be redirected
      */
     //'post_upload_route' => 'zfcuser',
+
+    /**
+    * Resizing Image for storage
+    *
+    * How do you want to store a newly uploaded image? Store as it is?
+    * If you want to crop(in square), then use the above `stored_image_size` option
+    * Else use the below options to resize a newly uploaded image
+    *
+    */
+    'storage_resizer' => array(
+        /*
+        * Resizer Name
+        *
+        * Fully Qualified ClassName of Resizer
+        * It should implement HCommons\Image\ResizingInterface
+        * 
+        * Available Resizers
+        * 1) HCommons\Image\BasicResizing
+        * 2) HCommons\Image\Crop
+        * 3) HCommons\Image\CropFromCenter
+        * 4) HCommons\Image\AdaptiveResizing
+        * 5) HCommons\Image\FitToWidth
+        * 6) HCommons\Image\FitToHeight
+        *
+        */
+        //'name' => '',// 
+
+
+        /*'options' => array(
+        
+        )*/
+    )
 );
 
 /**

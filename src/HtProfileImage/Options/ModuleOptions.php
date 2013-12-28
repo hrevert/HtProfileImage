@@ -14,6 +14,8 @@ class ModuleOptions extends AbstractOptions implements
 
     protected $storedImageSize = 200;
 
+    protected $storageResizer = false;
+
     protected $enableGender = false;
 
     protected $defaultImage;
@@ -46,6 +48,16 @@ class ModuleOptions extends AbstractOptions implements
     public function getStoredImageSize()
     {
         return $this->storedImageSize;
+    }
+
+    public function setStorageResizer(array $storageResizer)
+    {
+        $this->storageResizer = $storageResizer;
+    }
+
+    public function getStorageResizer()
+    {
+        return $this->storageResizer;
     }
 
     public function setDefaultImageSize($defaultImageSize)

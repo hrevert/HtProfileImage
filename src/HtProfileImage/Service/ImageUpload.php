@@ -2,7 +2,7 @@
 
 namespace HtProfileImage\Service;
 
-use ZfcUser\Entity\User;
+use ZfcUser\Entity\UserInterface;
 use HtProfileImage\Form\ProfileImageForm;
 use HtProfileImage\Form\ProfileImageInputFilter;
 use HtProfileImage\Form\ProfileImageValidator;
@@ -12,7 +12,7 @@ class ImageUpload extends EventProvider
 {
     use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
-    public function uploadImage(User $user, ProfileImageForm $form, array $files)
+    public function uploadImage(UserInterface $user, ProfileImageForm $form, array $files)
     {
         $validator = new ProfileImageValidator();
         $form->setData($files);
@@ -24,22 +24,31 @@ class ImageUpload extends EventProvider
             $inputFilter->init();
             $form->setInputFilter($inputFilter);
             $result = $form->isValid();
-            try {
-                $thumbnailer = $this->getServiceLocator()->get('WebinoImageThumb');
+            //try {
+                //$thumbnailer = $this->getServiceLocator()->get('WebinoImageThumb');
                 $file = $inputFilter->getUploadTarget();
-                $thumb = $thumbnailer->create($file);
+                //$thumb = $thumbnailer->create($file);
                 $newFileName = $this->getServiceLocator()->get('HtProfileImage\StorageModel')->getUserImage($user->getId());
-                $thumb->adaptiveResize($moduleOptions->getStoredImageSize(), $moduleOptions->getStoredImageSize());
-                $thumb->save($newFileName); 
-                unlink($file);
+                //$thumb->adaptiveResize($moduleOptions->getStoredImageSize(), $moduleOptions->getStoredImageSize());
+                $resizingOptions = $this->getServiceLocator()->get('HtProfileImage\StorageResizerProvider')->getStorageResizer();
+                if (!$resizingOptions) {
+                    rename($file, $newFileName);
+                } else {
+                    $resizer = new $resizingOptions['name'];
+                    $resizer->setOptions($resizingOptions['options']);
+                    $resizer->setImagePath($file);
+                    $thumb = $resizer->getPhpThumb();
+                    $thumb->save($newFileName);
+                    unlink($file);                     
+                }
                 $this->getEventManager()->trigger('imageUploaded', null, array(
                     'file_name' => $newFileName,
                     'user' => $user
                 ));
                 return true;           
-            } catch (\Exception $e) {
+            //} catch (\Exception $e) {
                 
-            }
+            //}
            
         }
         return false;        

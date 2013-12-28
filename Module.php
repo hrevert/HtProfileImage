@@ -51,13 +51,15 @@ class Module
                     return new Options\ModuleOptions(isset($config['htprofileimage']) ? $config['htprofileimage'] : array());
                 },
                 'HtProfileImage\StorageModel' => function ($sm) {
-                    $storageModel = new Model\StorageModel($sm->get('HtProfileImage\ModuleOptions'));
-                    return $storageModel;
+                    return new Model\StorageModel($sm->get('HtProfileImage\ModuleOptions'));
                 },
                 'HtProfileImage\ImageUploadService' => function ($sm) {
                     $service = new Service\ImageUpload();
                     $service->setServiceLocator($sm);
                     return $service;
+                },
+                'HtProfileImage\StorageResizerProvider' => function ($sm) {
+                    return new Model\StorageResizerProvider($sm->get('HtProfileImage\ModuleOptions'));
                 }
             )
         );
