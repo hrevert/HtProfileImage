@@ -6,8 +6,9 @@ use ZfcUser\Entity\User;
 use HtProfileImage\Form\ProfileImageForm;
 use HtProfileImage\Form\ProfileImageInputFilter;
 use HtProfileImage\Form\ProfileImageValidator;
+use ZfcBase\EventManager\EventProvider;
 
-class ImageUpload
+class ImageUpload extends EventProvider
 {
     use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
@@ -23,7 +24,7 @@ class ImageUpload
             $inputFilter->init();
             $form->setInputFilter($inputFilter);
             $result = $form->isValid();
-            //try {
+            try {
                 $thumbnailer = $this->getServiceLocator()->get('WebinoImageThumb');
                 $file = $inputFilter->getUploadTarget();
                 $thumb = $thumbnailer->create($file);
@@ -31,10 +32,14 @@ class ImageUpload
                 $thumb->adaptiveResize($moduleOptions->getStoredImageSize(), $moduleOptions->getStoredImageSize());
                 $thumb->save($newFileName); 
                 unlink($file);
+                $this->getEventManager()->trigger('imageUploaded', null, array(
+                    'file_name' => $newFileName,
+                    'user' => $user
+                ));
                 return true;           
-            //} catch (\Exception $e) {
+            } catch (\Exception $e) {
                 
-            //}
+            }
            
         }
         return false;        

@@ -8,9 +8,13 @@ use ZfcUser\Mapper\User as UserMapper;
 use HtProfileImage\Model\StorageModel;
 use ZfcUser\Entity\User;
 
+/**
+ * This class gets image of a user
+ * It is a view helper and called from view tempates
+ */
+
 class ProfileImage extends Gravatar
 {
-
 
     /**
     * @var DisplayOptionsInterface
@@ -46,28 +50,51 @@ class ProfileImage extends Gravatar
     {
         $this->storageModel = $storageModel;
     }
-    
+
+    /**
+     * gets StorageModel 
+     * @return StorageModel
+     */    
     public function getStorageModel()
     {
         return $this->storageModel;
     }
 
+    /**
+     * gets DisplayOptionsInterface 
+     * @return DisplayOptionsInterface
+     */ 
     public function getDisplayOptions()
     {
         return $this->displayOptions;
     }
 
-
+    /**
+     * sets UserMapper
+     * @param UserMapper $userMapper
+     * @return void
+     */ 
     public function setUserMapper(UserMapper $userMapper)
     {
         $this->userMapper = $userMapper;
     }
 
+    /**
+     * gets UserMapper
+     * @return UserMapper
+     */
     public function getUserMapper()
     {
         return $this->userMapper;
     }
 
+    /**
+     * gets user from user_id
+     * it only queries one time for a user
+     * @param int $id (user_id)
+     *
+     * @return UserMapper
+     */
     public function getUser($id)
     {
         if (!isset($this->retrievedUsers[$id])) {
@@ -78,12 +105,27 @@ class ProfileImage extends Gravatar
         return $this->retrievedUsers[$id];
     }
 
+    /**
+     * stores User data to prevent from querying to database
+     * it only queries one time for a user
+     *
+     * @param User $user 
+     * @return void
+     */
     protected function setUser(User $user)
     {
         $id = $user->getId();
         $this->retrievedUsers[$id] = $user;
     }
 
+    /**
+     * gets image of a user
+     *
+     * @param User|int $user (instance of User or user_id)
+     * @param array $options
+     * @param array $attribs      
+     * @return self
+     */
     public function __invoke($user, $options = array(), $attribs = array())
     {
         if (!isset($options['img_size'])) {

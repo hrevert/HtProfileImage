@@ -12,7 +12,11 @@ class HtProfileImageController extends AbstractActionController
 {
     public function profileAction()
     {
-        $user = $this->getServiceLocator()->get('zfcuser_auth_service')->getIdentity();
+        $authenticationService = $this->getServiceLocator()->get('zfcuser_auth_service');
+        if (!$authenticationService->hasIdentity()) {
+            return $this->redirect()->toRoute('zfcuser');
+        }
+        $user = $authenticationService->getIdentity();
         $options = $this->getServiceLocator()->get('HtProfileImage\ModuleOptions');
         $form = new ProfileImageForm();
         $request = $this->getRequest();
@@ -82,7 +86,7 @@ class HtProfileImageController extends AbstractActionController
             $thumbnailer = $this->getServiceLocator()->get('WebinoImageThumb');
             $thumb = $thumbnailer->create($file);
             if (!$size) {
-                $size = $this->getServiceLocator()->get('HtProfileImage\ModuleOptions')->getDefaultImageSize();
+                $size = $options->getDefaultImageSize();
             }
             $thumb->adaptiveResize($size, $size);
             $vm->setPhpThumb($thumb);
