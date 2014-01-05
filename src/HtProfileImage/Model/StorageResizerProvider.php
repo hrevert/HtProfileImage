@@ -24,6 +24,7 @@ class StorageResizerProvider
 
     /**
      * gets StorageOptionsInterface
+     *
      * @return StorageOptionsInterface
      */
     public function getStorageOptions()
@@ -33,6 +34,8 @@ class StorageResizerProvider
 
     /**
      * gets resizer for storing
+     *
+     * @return false|HCommons\Image\ResizingInterface
      */
     public function getStorageResizer()
     {
@@ -43,7 +46,7 @@ class StorageResizerProvider
             return $resizer;
         }
         $size = $this->getStorageOptions()->getStoredImageSize();
-        if ($size === null) {
+        if ($size === null or $size === false) {
             return false;
         }
         $resizer = new \HCommons\Image\AdaptiveResizing();
