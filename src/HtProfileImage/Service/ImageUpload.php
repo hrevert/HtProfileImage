@@ -25,22 +25,13 @@ class ImageUpload extends EventProvider
             $inputFilter->init();
             $form->setInputFilter($inputFilter);
             $result = $form->isValid();
-            //try {
-                //$thumbnailer = $this->getServiceLocator()->get('WebinoImageThumb');
+            try {
                 $file = $inputFilter->getUploadTarget();
-                //$thumb = $thumbnailer->create($file);
                 $newFileName = $this->getServiceLocator()->get('HtProfileImage\StorageModel')->getUserImage($user->getId());
-                //$thumb->adaptiveResize($moduleOptions->getStoredImageSize(), $moduleOptions->getStoredImageSize());
-                $resizingOptions = $this->getServiceLocator()->get('HtProfileImage\StorageResizerProvider')->getStorageResizer();
-                if (!$resizingOptions) {
+                $resizer = $this->getServiceLocator()->get('HtProfileImage\StorageResizerProvider')->getStorageResizer();
+                if (!$resizer instanceof ResizingInterface) {
                     rename($file, $newFileName);
                 } else {
-                    if (is_object($resizingOptions) && $resizingOptions instanceof ResizingInterface) {
-                        $resizer = $resizingOptions;
-                    } else {
-                        $resizer = new $resizingOptions['name'];
-                        $resizer->setOptions($resizingOptions['options']);                        
-                    }
                     $resizer->setImagePath($file);
                     $thumb = $resizer->getPhpThumb();
                     $thumb->save($newFileName);
@@ -51,9 +42,9 @@ class ImageUpload extends EventProvider
                     'user' => $user
                 ));
                 return true;           
-            //} catch (\Exception $e) {
+            } catch (\Exception $e) {
                 
-            //}
+            }
            
         }
         return false;        

@@ -37,7 +37,10 @@ class StorageResizerProvider
     public function getStorageResizer()
     {
         if ($this->getStorageOptions()->getStorageResizer()) {
-            return $this->getStorageOptions()->getStorageResizer();
+            $resizingOptions = $this->getStorageOptions()->getStorageResizer();
+            $resizer = new $resizingOptions['name'];
+            $resizer->setOptions($resizingOptions['options']);  
+            return $resizer;
         }
         $size = $this->getStorageOptions()->getStoredImageSize();
         if ($size === null) {
