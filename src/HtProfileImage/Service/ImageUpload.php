@@ -7,6 +7,7 @@ use HtProfileImage\Form\ProfileImageForm;
 use HtProfileImage\Form\ProfileImageInputFilter;
 use HtProfileImage\Form\ProfileImageValidator;
 use ZfcBase\EventManager\EventProvider;
+use HCommons\Image\ResizingInterface;
 
 class ImageUpload extends EventProvider
 {
@@ -34,8 +35,12 @@ class ImageUpload extends EventProvider
                 if (!$resizingOptions) {
                     rename($file, $newFileName);
                 } else {
-                    $resizer = new $resizingOptions['name'];
-                    $resizer->setOptions($resizingOptions['options']);
+                    if (is_object($resizingOptions) && $resizingOptions instanceof ResizingInterface) {
+                        $resizer = $resizingOptions;
+                    } else {
+                        $resizer = new $resizingOptions['name'];
+                        $resizer->setOptions($resizingOptions['options']);                        
+                    }
                     $resizer->setImagePath($file);
                     $thumb = $resizer->getPhpThumb();
                     $thumb->save($newFileName);
