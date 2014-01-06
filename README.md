@@ -13,7 +13,7 @@ Note: This module is not fully tested.
 * Useful view helpers to get user images from view templates
 
 ## Installation
-* Add `"hrevert/ht-profile-image": "1.0.*",` to your composer.json and run `php composer.phar update`
+* Add `"webino/webino-image-thumb": "dev-master",` && `"hrevert/ht-profile-image": "1.0.*",` to your composer.json and run `php composer.phar update`
 * Enable the module in `config/application.config.php`
 * Copy file located in `config/htprofileimage.global.php` to `./config/autoload/htprofileimage.global.php` and change the values as you wish
  
