@@ -4,9 +4,9 @@ namespace HtProfileImage\View\Helper;
 
 use HtProfileImage\Options\DisplayOptionsInterface;
 use Zend\View\Helper\Gravatar;
-use ZfcUser\Mapper\User as UserMapper;
-use HtProfileImage\Model\StorageModel;
-use ZfcUser\Entity\User;
+use ZfcUser\Mapper\UserInterface as UserMapperInterface;
+use HtProfileImage\Model\StorageModelInterface;
+use ZfcUser\Entity\UserInterface;
 
 /**
  * This class gets image of a user
@@ -22,17 +22,17 @@ class ProfileImage extends Gravatar
     protected $displayOptions;
 
     /**
-    * @var UserMapper
+    * @var UserMapperInterface
     */
     protected $userMapper;
 
     /**
-    * @array whose elements are elements are instance of \ZfcUser\Entity\User
+    * @array whose elements are elements are instance of \ZfcUser\Entity\UserInterface
     */
     protected $retrievedUsers = array();
 
     /**
-    * @var StorageModel
+    * @var StorageModelInterface
     */
     protected $storageModel;
 
@@ -43,17 +43,17 @@ class ProfileImage extends Gravatar
     }
 
     /**
-    * set StorageModel 
-    * @param $storageModel StorageModel
+    * set StorageModelInterface 
+    * @param $storageModel StorageModelInterface
     */
-    public function setStorageModel(StorageModel $storageModel)
+    public function setStorageModel(StorageModelInterface $storageModel)
     {
         $this->storageModel = $storageModel;
     }
 
     /**
-     * gets StorageModel 
-     * @return StorageModel
+     * gets StorageModelInterface 
+     * @return StorageModelInterface
      */    
     public function getStorageModel()
     {
@@ -70,18 +70,18 @@ class ProfileImage extends Gravatar
     }
 
     /**
-     * sets UserMapper
-     * @param UserMapper $userMapper
+     * sets UserMapperInterface
+     * @param UserMapperInterface $userMapper
      * @return void
      */ 
-    public function setUserMapper(UserMapper $userMapper)
+    public function setUserMapper(UserMapperInterface $userMapper)
     {
         $this->userMapper = $userMapper;
     }
 
     /**
-     * gets UserMapper
-     * @return UserMapper
+     * gets UserMapperInterface
+     * @return UserMapperInterface
      */
     public function getUserMapper()
     {
@@ -93,7 +93,7 @@ class ProfileImage extends Gravatar
      * it only queries one time for a user
      * @param int $id (user_id)
      *
-     * @return UserMapper
+     * @return UserMapperInterface
      */
     public function getUser($id)
     {
@@ -112,7 +112,7 @@ class ProfileImage extends Gravatar
      * @param User $user 
      * @return void
      */
-    protected function setUser(User $user)
+    protected function setUser(UserInterface $user)
     {
         $id = $user->getId();
         $this->retrievedUsers[$id] = $user;
@@ -140,13 +140,13 @@ class ProfileImage extends Gravatar
         }
         if (is_string($user) || is_int($user)) {
             $id = $user;
-        } elseif($user instanceof User) {
+        } elseif($user instanceof UserInterface) {
             $id = $user->getId();
             $this->setUser($user);
         } else {
                 throw new \InvalidArgumentException(
                     sprintf(
-                        "%s expects an instance of ZfcUser\Entity\User or user_id as 1st argument",
+                        "%s expects an instance of ZfcUser\Entity\UserInterface or user_id as 1st argument",
                         __METHOD__
                     )
                 );            

@@ -4,7 +4,7 @@ namespace HtProfileImage\Model;
 
 use HtProfileImage\Options\StorageOptionsInterface;
 
-class StorageModel
+class StorageModel implements StorageModelInterface
 {
     // extension of image
     const USER_IMAGE_EXTENSION = "png";

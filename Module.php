@@ -46,21 +46,10 @@ class Module
     {
         return array(
             'factories' => array(
-                'HtProfileImage\ModuleOptions' => function ($sm) {
-                    $config = $sm->get('Config');
-                    return new Options\ModuleOptions(isset($config['htprofileimage']) ? $config['htprofileimage'] : array());
-                },
-                'HtProfileImage\StorageModel' => function ($sm) {
-                    return new Model\StorageModel($sm->get('HtProfileImage\ModuleOptions'));
-                },
-                'HtProfileImage\ImageUploadService' => function ($sm) {
-                    $service = new Service\ImageUpload();
-                    $service->setServiceLocator($sm);
-                    return $service;
-                },
-                'HtProfileImage\StorageResizerProvider' => function ($sm) {
-                    return new Model\StorageResizerProvider($sm->get('HtProfileImage\ModuleOptions'));
-                }
+                'HtProfileImage\ModuleOptions' => 'HtProfileImage\Factory\ModuleOptionsFactory',
+                'HtProfileImage\StorageModel' => 'HtProfileImage\Factory\StorageModelFactory',
+                'HtProfileImage\ImageUploadService' => 'HtProfileImage\Factory\ImageUploadServiceFactory',
+                'HtProfileImage\StorageResizerProvider' => 'HtProfileImage\Factory\StorageResizerProviderFactory',
             )
         );
     }
