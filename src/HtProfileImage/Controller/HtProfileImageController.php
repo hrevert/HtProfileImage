@@ -66,7 +66,7 @@ class HtProfileImageController extends AbstractActionController
         $storageModel = $this->getServiceLocator()->get('HtProfileImage\StorageModel');
         if (!$storageModel->userImageExists($id)) {
             if ($options->getEnableGender()) {
-                if (!$gender) {
+                if ($gender === null) {
                     $user = $this->getUser($id);
                     $gender = $user->getGender();
                 }
