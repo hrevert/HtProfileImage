@@ -22,3 +22,7 @@ Note: This module is not fully tested.
 Please check this [wiki](https://github.com/hrevert/HtProfileImage/wiki) for more details on how to use this module.
 
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/hrevert/htprofileimage/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
