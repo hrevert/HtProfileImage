@@ -7,6 +7,7 @@ use Zend\View\Helper\Gravatar;
 use ZfcUser\Mapper\UserInterface as UserMapperInterface;
 use HtProfileImage\Model\StorageModelInterface;
 use ZfcUser\Entity\UserInterface;
+use HtProfileImage\Exception;
 
 /**
  * This class gets image of a user
@@ -144,7 +145,7 @@ class ProfileImage extends Gravatar
             $id = $user->getId();
             $this->setUser($user);
         } else {
-                throw new \InvalidArgumentException(
+                throw new Exception\InvalidArgumentException(
                     sprintf(
                         "%s expects an instance of ZfcUser\Entity\UserInterface or user_id as 1st argument",
                         __METHOD__
@@ -158,17 +159,17 @@ class ProfileImage extends Gravatar
             $this->setEmail($user->getEmail());
             $url = $this->getAvatarUrl();
         } else {
+            $params = array('id' => $id, 'size' => $size);
             if ($this->getDisplayOptions()->getEnableGender()) {
                 $user = $this->getUser($id);
                 if (method_exists($user, 'getGender')) {
                     $params['gender'] = $user->getGender();
                 }
             }
-            $params = array('id' => $id, 'size' => $size);
             $url = $this->getView()->url('zfcuser/htimagedisplay', $params);
         }
         $this->setAttribs(array(
-            'style' => "width:$size".'px'.";height:$size".'px'.";",
+            'style' => "width:$size" . "px;height:$size" . 'px;',
             'src' => $url
         ));
         return $this;
