@@ -4,6 +4,7 @@ return array(
   'HtProfileImage\Module'                                => __DIR__ . '/Module.php',
   'HtProfileImage\Controller\HtProfileImageController'   => __DIR__ . '/src/HtProfileImage/Controller/HtProfileImageController.php',
   'HtProfileImage\Entity\User'                           => __DIR__ . '/src/HtProfileImage/Entity/User.php',
+  'HtProfileImage\Exception\InvalidArgumentException'    => __DIR__ . '/src/HtProfileImage/Exception/InvalidArgumentException.php',
   'HtProfileImage\Factory\ImageUploadServiceFactory'     => __DIR__ . '/src/HtProfileImage/Factory/ImageUploadServiceFactory.php',
   'HtProfileImage\Factory\ModuleOptionsFactory'          => __DIR__ . '/src/HtProfileImage/Factory/ModuleOptionsFactory.php',
   'HtProfileImage\Factory\StorageModelFactory'           => __DIR__ . '/src/HtProfileImage/Factory/StorageModelFactory.php',

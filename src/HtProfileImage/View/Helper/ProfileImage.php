@@ -147,8 +147,9 @@ class ProfileImage extends Gravatar
         } else {
                 throw new Exception\InvalidArgumentException(
                     sprintf(
-                        "%s expects an instance of ZfcUser\Entity\UserInterface or user_id as 1st argument",
-                        __METHOD__
+                        '%s expects an instance of ZfcUser\Entity\UserInterface or user_id as 1st argument, %s provided instead',
+                        __METHOD__,
+                        is_object($user) ? get_class($user) : gettype($user)
                     )
                 );            
         }
