@@ -3,8 +3,6 @@ HtProfileImage
 
 A Zend framework 2 module which adds profile image upload functionality to ZfcUser
 
-Note: This module is not fully tested.
-
 ## Features
 
 * Setting Gravatar as alternative when user has not uploaded his image
