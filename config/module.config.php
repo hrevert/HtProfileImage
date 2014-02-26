@@ -2,8 +2,8 @@
 
 return array(
     'controllers' => array(
-        'invokables' => array(
-            'HtProfileImage\HtProfileImage' => 'HtProfileImage\Controller\HtProfileImageController'
+        'factories' => array(
+            'HtProfileImage\ProfileImage' => 'HtProfileImage\Controller\Factory\ProfileImageControllerFactory'
         ),
     ),
     'router' => array(
@@ -15,8 +15,8 @@ return array(
                         'options' => array(
                             'route' => '/upload-image',
                             'defaults' => array(
-                                'controller' => 'HtProfileImage\HtProfileImage',
-                                'action' => 'profile'
+                                'controller' => 'HtProfileImage\ProfileImage',
+                                'action' => 'upload'
                             )
                         )
                     ),
@@ -25,7 +25,7 @@ return array(
                         'options' => array(
                             'route' => '/display-image/:id/[:size/][:gender/]',
                             'defaults' => array(
-                                'controller' => 'HtProfileImage\HtProfileImage',
+                                'controller' => 'HtProfileImage\ProfileImage',
                                 'action' => 'display-image'
                             )
                         )
@@ -42,4 +42,16 @@ return array(
             'zfc-user/user/index' =>  __DIR__ . '/../view/zfc-user/user/index.phtml'
         )
     ),
+    'htimg' => [
+        'filters' => [
+            'htprofileimage_store' => [  // # Transforms 50x40 to 32x32, while cropping the width
+                'type' => 'thumbnail',
+                'options' => [
+                    'width' => 120,
+                    'height' => 120,
+                    'mode' => 'outbound '
+                ]
+            ],        
+        ]   
+    ]
 );

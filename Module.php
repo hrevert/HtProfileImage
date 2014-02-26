@@ -30,35 +30,41 @@ class Module
 
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\ClassMapAutoloader' => array(
+        return [
+            'Zend\Loader\ClassMapAutoloader' => [
                 __DIR__ . '/autoload_classmap.php',
-            ),
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+            ],
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     public function getServiceConfig()
     {
-        return array(
-            'factories' => array(
+        return [
+            'invokables' => [
+                'HtProfileImage\ProfileImageForm' => 'HtProfileImage\Form\ProfileImageForm',
+            ],
+            'factories' => [
                 'HtProfileImage\ModuleOptions' => 'HtProfileImage\Factory\ModuleOptionsFactory',
                 'HtProfileImage\StorageModel' => 'HtProfileImage\Factory\StorageModelFactory',
-                'HtProfileImage\ImageUploadService' => 'HtProfileImage\Factory\ImageUploadServiceFactory',
+                'HtProfileImage\Service\ProfileImageService' => 'HtProfileImage\Factory\ProfileImageServiceFactory',
                 'HtProfileImage\StorageResizerProvider' => 'HtProfileImage\Factory\StorageResizerProviderFactory',
-            )
-        );
+            ],
+            'aliases' => [
+                
+            ]
+        ];
     }
     
 
     public function getViewHelperConfig()
     {
-        return array(
-            'factories' => array(
+        return [
+            'factories' => [
                 'htProfileImage' => function ($sm) {
                     $serviceLocator = $sm->getServiceLocator();
                     $htProfileImage = new View\Helper\ProfileImage($serviceLocator->get('HtProfileImage\ModuleOptions'));
@@ -66,7 +72,7 @@ class Module
                     $htProfileImage->setStorageModel($serviceLocator->get('HtProfileImage\StorageModel'));
                     return $htProfileImage;
                 }            
-            )
-        );
+            ]
+        ];
     }
 }

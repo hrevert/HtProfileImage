@@ -4,25 +4,33 @@ namespace HtProfileImage\Controller;
 
 use HtProfileImage\Form\ProfileImageForm;
 use Zend\View\Model;
-use HCommons\View\Model\ImageModel;
-use HCommons\Model\GenderManager;
 use Zend\Mvc\Controller\AbstractActionController;
+use HtProfileImage\Service\ProfileImageServiceInterface;
 
-class HtProfileImageController extends AbstractActionController
+class ProfileImageController extends AbstractActionController
 {
-    public function profileAction()
+    protected $profileImageService;
+
+    protected $options;
+
+    public function __construct(ProfileImageServiceInterface $profileImageService)
+    {
+        $this->profileImageService = $profileImageService;
+    }
+
+    public function uploadAction()
     {
         $authenticationService = $this->getServiceLocator()->get('zfcuser_auth_service');
         if (!$authenticationService->hasIdentity()) {
             return $this->redirect()->toRoute('zfcuser');
         }
         $user = $authenticationService->getIdentity();
-        $options = $this->getServiceLocator()->get('HtProfileImage\ModuleOptions');
-        $form = new ProfileImageForm();
+        $options = $this->getOptions();
+        $form = $this->getServiceLocator()->get('HtProfileImage\ProfileImageForm');
         $request = $this->getRequest();
-        $image_uploaded = false;
+        $imageUploaded = false;
         if ($request->isPost()) {
-            if ($this->getService()->uploadImage($user, $form, $request->getFiles()->toArray())) {
+            if ($this->profileImageService->uploadImage($user, $request->getFiles()->toArray())) {
                 if ($request->isXmlHttpRequest()) {
                     return new Model\JsonModel(array(
                         'uploaded' => true
@@ -30,7 +38,7 @@ class HtProfileImageController extends AbstractActionController
                 } elseif ($options->getPostUploadRoute()) {
                         return call_user_func_array(array($this->redirect(), 'toRoute'), (array) $options->getPostUploadRoute());
                 }
-                $image_uploaded = true;
+                $imageUploaded = true;
             } else {
                 if ($request->isXmlHttpRequest()) {
                     return new Model\JsonModel(array(
@@ -44,7 +52,7 @@ class HtProfileImageController extends AbstractActionController
 
         return new Model\ViewModel(array(
             'form' => $form,
-            'image_uploaded' => $image_uploaded,
+            'imageUploaded' => $imageUploaded,
             'user' => $user
         ));
     }
@@ -99,5 +107,14 @@ class HtProfileImageController extends AbstractActionController
     protected function getUser($id)
     {
         return $this->getServiceLocator()->get('zfcuser_user_mapper')->findById($id);
+    }
+
+    public function getOptions()
+    {
+        if (!$this->options) {
+            $this->options = $this->getServiceLocator()->get('HtProfileImage\ModuleOptions');
+        }
+
+        return $this->options;
     }
 }

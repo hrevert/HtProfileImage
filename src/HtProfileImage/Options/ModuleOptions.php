@@ -8,13 +8,9 @@ class ModuleOptions extends AbstractOptions implements
     StorageOptionsInterface, 
     DisplayOptionsInterface
 {
-    protected $uploadDirectory = "data/uploads/profile-images";
+    protected $uploadDirectory = 'data/uploads/profile-images';
 
-    protected $defaultImageSize = 80;
-
-    protected $storedImageSize = 200;
-
-    protected $storageResizer = false;
+    protected $storageFilter = 'htprofileimage_store';
 
     protected $enableGender = false;
 
@@ -26,7 +22,7 @@ class ModuleOptions extends AbstractOptions implements
 
     protected $enableGravatarAlternative = true;
 
-    protected $serveCroppedImage  = true;
+    protected $displayFilter  = 'htprofileimage_display';
 
     protected $postUploadRoute = 'zfcuser';
 
@@ -40,34 +36,14 @@ class ModuleOptions extends AbstractOptions implements
         return $this->uploadDirectory;
     }
 
-    public function setStoredImageSize($storedImageSize)
+    public function setStorageFilter($storageFilter)
     {
-        $this->storedImageSize = $storedImageSize;
+        $this->storageFilter = $storageFilter;
     }
 
-    public function getStoredImageSize()
+    public function getStorageFilter()
     {
-        return $this->storedImageSize;
-    }
-
-    public function setStorageResizer(array $storageResizer)
-    {
-        $this->storageResizer = $storageResizer;
-    }
-
-    public function getStorageResizer()
-    {
-        return $this->storageResizer;
-    }
-
-    public function setDefaultImageSize($defaultImageSize)
-    {
-        $this->defaultImageSize = $defaultImageSize;
-    }
-
-    public function getDefaultImageSize()
-    {
-        return $this->defaultImageSize;
+        return $this->storageFilter;
     }
 
     public function setEnableGender($enableGender)
@@ -120,14 +96,14 @@ class ModuleOptions extends AbstractOptions implements
         $this->enableGravatarAlternative = (bool) $enableGravatarAlternative;
     }
 
-    public function setServeCroppedImage($serveCroppedImage)
+    public function setDisplayFilter($displayFilter)
     {
-        $this->serveCroppedImage = $serveCroppedImage;
+        $this->displayFilter = $displayFilter;
     }
 
-    public function getServeCroppedImage()
+    public function getDisplayFilter()
     {
-        return $this->serveCroppedImage;
+        return $this->displayFilter;
     }
 
     public function setPostUploadRoute($postUploadRoute)

@@ -10,7 +10,6 @@ class ProfileImageValidator extends ProvidesEventsInputFilter
 {
     public function __construct()
     {
-
         $this->add(array(
             'name' => 'image',
             'required' => true,

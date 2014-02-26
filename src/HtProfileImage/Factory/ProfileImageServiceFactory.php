@@ -3,19 +3,19 @@ namespace HtProfileImage\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use HtProfileImage\Service\ImageUpload;
+use HtProfileImage\Service\ProfileImageService;
 
-class ImageUploadServiceFactory implements FactoryInterface
+class ProfileImageServiceFactory implements FactoryInterface
 {
     /**
-     * gets ImageUpload Service 
+     * gets ProfileImageService Service 
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @return ImageUpload
+     * @return ProfileImageService
      */    
      public function createService(ServiceLocatorInterface $sm)
      {
-        $service = new ImageUpload();
+        $service = new ProfileImageService();
         $service->setServiceLocator($sm);
         return $service;         
      }

@@ -4,9 +4,9 @@ namespace HtProfileImage\Options;
 
 interface DisplayOptionsInterface
 {
-    public function setDefaultImageSize($defaultImageSize);
+    public function getDisplayFilter();
 
-    public function getDefaultImageSize();
+    public function setDisplayFilter($displayFilter);
 
     public function getEnableGravatarAlternative();
 
@@ -15,19 +15,5 @@ interface DisplayOptionsInterface
     public function setEnableGender($enableGender);
 
     public function getEnableGender();
-
-    /*
-    public function setServeCroppedImage($serveCroppedImage);
-
-    public function getServeCroppedImage();
-
-    public function getMaleImage();
-
-    public function getFemaleImage();
-
-    public function setMaleImage($maleImage);
-
-    public function setFemaleImage($femaleImage);*/
-
 
 }

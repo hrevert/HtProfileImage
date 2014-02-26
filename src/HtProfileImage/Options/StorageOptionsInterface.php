@@ -8,11 +8,11 @@ interface StorageOptionsInterface
 
     public function getUploadDirectory();
 
-    public function setStoredImageSize($storedImageSize);
+    public function setStorageFilter($storageFilter);
 
-    public function getStoredImageSize();
+    public function getStorageFilter();
 
-    public function setStorageResizer(array $storageResizer);
+    public function setDisplayFilter($displayFilter);
 
-    public function getStorageResizer();
+    public function getDisplayFilter();
 }
