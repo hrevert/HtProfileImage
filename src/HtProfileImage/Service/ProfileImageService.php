@@ -6,6 +6,7 @@ use HtProfileImage\Form\ProfileImageForm;
 use HtProfileImage\Form\ProfileImageInputFilter;
 use HtProfileImage\Form\ProfileImageValidator;
 use ZfcBase\EventManager\EventProvider;
+use HtProfileImage\Entity\UserInterface as UserGender; 
 
 class ProfileImageService extends EventProvider implements ProfileImageServiceInterface
 {
@@ -18,6 +19,8 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
     protected $filterManager;
 
     protected $imagine;
+
+    protected $cacheManager;
 
     public function uploadImage(UserInterface $user, array $files)
     {
@@ -36,7 +39,7 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             $form->setInputFilter($inputFilter);    
             $result = $form->isValid();// upload the image  
             $file = $inputFilter->getUploadTarget();
-            $newFileName = $this->getStorageModel()->getUserImage($user->getId());
+            $newFileName = $this->getStorageModel()->getUserImage($user);
             $filterAlias = $this->getOptions()->getStorageFilter();
             if (!$filterAlias) {
                 rename($file, $newFileName); //no filter alias given, just rename
@@ -50,8 +53,9 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
                 }
                 $image->save($newFileName); // store the image
             }
+            unlink($file);
             $this->getEventManager()->trigger(__METHOD__ . '.post', $this, array(
-                'file_name' => $newFileName,
+                'image_path' => $newFileName,
                 'user' => $user
             ));
 
@@ -61,15 +65,44 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         return false;               
     }
 
-    public function getUserImage(UserInterface $user)
+    public function getUserImage(UserInterface $user, $filterAlias = null)
     {
-        $fileName = $this->getStorageModel()->getUserImage($user->getId());
-        if ($this->getStorageModel()->getUserImage($user)) {
-            $image = $this->getImagine()->open($file);
+        if ($this->getStorageModel()->userImageExists($user)) {
+            $fileName = $this->getStorageModel()->getUserImage($user);
         } else {
-            
+            if ($this->getOptions()->getEnableGender()) {
+                switch($user->getGender())
+                {
+                    case UserGender::GENDER_FEMALE:
+                        $fileName = $this->getOptions()->getFemaleImage();
+                        break;
+                    default:
+                        $fileName = $this->getOptions()->getMaleImage();
+                        break;
+                }
+            } else {
+                $fileName = $this->getOptions()->getDefaultImage();
+            }
         }
-        $image = $this->getImagine()->open($file);
+
+        $image = $this->getImagine()->open($fileName);
+        if (!$filterAlias) {
+            $filterAlias = $this->getOptions()->getDisplayFilter();
+        }
+        if ($filterAlias) {
+            $filter = $this->getFilterManager()->getFilter($filterAlias); 
+            $image = $filter->apply($image);
+        }
+        if ($this->getOptions()->getEnableCache()) {
+            $this->getCacheManager()->createCache(
+                'user/'. $user->getId(), 
+                $filterAlias, 
+                $image,
+                $this->getStorageModel()->getUserImageExtension()
+            );
+        }
+
+        return $image;
     }
 
     public function getOptions()
@@ -106,5 +139,14 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         }
 
         return $this->imagine;
+    }
+
+    public function getCacheManager()
+    {
+        if (!$this->cacheManager) {
+            $this->cacheManager = $this->getServiceLocator()->get('HtImgModule\Service\CacheManager');
+        }
+
+        return $this->cacheManager;
     }
 }

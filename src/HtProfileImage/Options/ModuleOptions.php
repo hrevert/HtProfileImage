@@ -26,6 +26,8 @@ class ModuleOptions extends AbstractOptions implements
 
     protected $postUploadRoute = 'zfcuser';
 
+    protected $enableCache = true;
+
     public function setUploadDirectory($uploadDirectory)
     {
         $this->uploadDirectory = $uploadDirectory;
@@ -114,5 +116,15 @@ class ModuleOptions extends AbstractOptions implements
     public function getPostUploadRoute()
     {
         return $this->postUploadRoute;
+    }
+
+    public function setEnableCache($enableCache)
+    {
+        $this->enableCache = $enableCache;
+    }
+
+    public function getEnableCache()
+    {
+        return $this->enableCache;
     }
 }

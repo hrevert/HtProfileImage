@@ -4,29 +4,27 @@ namespace HtProfileImage;
 
 use HtProfileImage\Form\GenderForm;
 use Zend\Mvc\MvcEvent;
+use Zend\EventManager\EventInterface;
 
 class Module
 {
-    public function getConfig()
-    {
-        return include __DIR__."/config/module.config.php";
-    }
-
     public function onBootstrap(MvcEvent $e)
     {
         $app = $e->getApplication();
         $serviceManager = $app->getServiceManager();
         $eventManager = $app->getEventManager();
         $sharedManager = $eventManager->getSharedManager();
-        if ($serviceManager->get("HtProfileImage\ModuleOptions")->getEnableGender()) {
-            $sharedManager->attach('ZfcUser\Form\Register', 'init', function ($e) {
-                $form = $e->getTarget();
-                $genderForm = new GenderForm();
-                $form->add($genderForm->get('gender'));
-            }, 1000);             
-        }   
+        $sharedManager->attach('HtProfileImage\Service\ProfileImageService', 'uploadImage.post', function (EventInterface $e) use ($serviceManager) {
+            $cacheManager = $serviceManager->get('HtProfileImage\Service\CacheManager');
+            $options = $serviceManager->get('HtProfileImage\ModuleOptions');
+            $cacheManager->deleteCache($sharedManager->get('zfcuser_auth_service'), $options->getDisplayFilter());
+        }, 10);
     }
 
+    public function getConfig()
+    {
+        return include __DIR__."/config/module.config.php";
+    }
 
     public function getAutoloaderConfig()
     {
@@ -53,6 +51,7 @@ class Module
                 'HtProfileImage\StorageModel' => 'HtProfileImage\Factory\StorageModelFactory',
                 'HtProfileImage\Service\ProfileImageService' => 'HtProfileImage\Factory\ProfileImageServiceFactory',
                 'HtProfileImage\StorageResizerProvider' => 'HtProfileImage\Factory\StorageResizerProviderFactory',
+                'HtProfileImage\Service\CacheManager' => 'HtProfileImage\Factory\CacheManagerFactory',
             ],
             'aliases' => [
                 
@@ -65,13 +64,10 @@ class Module
     {
         return [
             'factories' => [
-                'htProfileImage' => function ($sm) {
-                    $serviceLocator = $sm->getServiceLocator();
-                    $htProfileImage = new View\Helper\ProfileImage($serviceLocator->get('HtProfileImage\ModuleOptions'));
-                    $htProfileImage->setUserMapper($serviceLocator->get('zfcuser_user_mapper'));
-                    $htProfileImage->setStorageModel($serviceLocator->get('HtProfileImage\StorageModel'));
-                    return $htProfileImage;
-                }            
+                'HtProfileImage\View\Helper\ProfileImage' => 'HtProfileImage\View\Helper\Factory\ProfileImageFactory',            
+            ],
+            'aliases' => [
+                'htProfileImage' => 'HtProfileImage\View\Helper\ProfileImage'
             ]
         ];
     }

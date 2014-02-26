@@ -2,12 +2,13 @@
     
 namespace HtProfileImage\View\Helper;
 
-use HtProfileImage\Options\DisplayOptionsInterface;
 use Zend\View\Helper\Gravatar;
 use ZfcUser\Mapper\UserInterface as UserMapperInterface;
-use HtProfileImage\Model\StorageModelInterface;
 use ZfcUser\Entity\UserInterface;
+use HtProfileImage\Model\StorageModelInterface;
 use HtProfileImage\Exception;
+use HtProfileImage\Options\DisplayOptionsInterface;
+use HtProfileImage\Service\CacheManagerInterface;
 
 /**
  * This class gets image of a user
@@ -18,45 +19,72 @@ class ProfileImage extends Gravatar
 {
 
     /**
-    * @var DisplayOptionsInterface
-    */
+     * @var DisplayOptionsInterface
+     */
     protected $displayOptions;
 
     /**
-    * @var UserMapperInterface
-    */
+     * @var UserMapperInterface
+     */
     protected $userMapper;
 
     /**
-    * @array whose elements are elements are instance of \ZfcUser\Entity\UserInterface
-    */
-    protected $retrievedUsers = array();
+     * @var UserInterface[]
+     */
+    protected $retrievedUsers = [];
 
     /**
-    * @var StorageModelInterface
-    */
+     * @var StorageModelInterface
+     */
     protected $storageModel;
 
-
-    public function __construct(DisplayOptionsInterface $displayOptions)
-    {
-        $this->displayOptions = $displayOptions;
-    }
+    /**
+     * @var CacheManagerInterface
+     */
+    protected $cacheManager;
 
     /**
-    * set StorageModelInterface 
-    * @param $storageModel StorageModelInterface
-    */
-    public function setStorageModel(StorageModelInterface $storageModel)
+     * @var string
+     */
+    protected $filterAlias;
+
+    /**
+     * Constructor
+     *
+     * @var DisplayOptionsInterface $displayOptions
+     * @var StorageModelInterface $storageModel
+     * @var UserMapperInterface $userMapper
+     */
+    public function __construct(
+        DisplayOptionsInterface $displayOptions,
+        StorageModelInterface $storageModel,
+        UserMapperInterface $userMapper
+    )
     {
+        $this->displayOptions = $displayOptions;
         $this->storageModel = $storageModel;
+        $this->userMapper = $userMapper;
+    }
+
+    public function setFilterAlias($filterAlias)
+    {
+        $this->filterAlias = $filterAlias;
+    }
+
+    public function getFilterAlias()
+    {
+        if (!$this->filterAlias) {
+            $this->filterAlias = $this->displayOptions->getDisplayFilter();
+        }
+
+        return $this->filterAlias;
     }
 
     /**
      * gets StorageModelInterface 
      * @return StorageModelInterface
      */    
-    public function getStorageModel()
+    protected function getStorageModel()
     {
         return $this->storageModel;
     }
@@ -65,28 +93,9 @@ class ProfileImage extends Gravatar
      * gets DisplayOptionsInterface 
      * @return DisplayOptionsInterface
      */ 
-    public function getDisplayOptions()
+    protected function getDisplayOptions()
     {
         return $this->displayOptions;
-    }
-
-    /**
-     * sets UserMapperInterface
-     * @param UserMapperInterface $userMapper
-     * @return void
-     */ 
-    public function setUserMapper(UserMapperInterface $userMapper)
-    {
-        $this->userMapper = $userMapper;
-    }
-
-    /**
-     * gets UserMapperInterface
-     * @return UserMapperInterface
-     */
-    public function getUserMapper()
-    {
-        return $this->userMapper;
     }
 
     /**
@@ -96,10 +105,10 @@ class ProfileImage extends Gravatar
      *
      * @return UserMapperInterface
      */
-    public function getUser($id)
+    protected function getUser($id)
     {
         if (!isset($this->retrievedUsers[$id])) {
-            $user = $this->getUserMapper()->findById($id);
+            $user = $this->userMapper->findById($id);
             $this->retrievedUsers[$id] = $user;
         }
 
@@ -115,8 +124,12 @@ class ProfileImage extends Gravatar
      */
     protected function setUser(UserInterface $user)
     {
-        $id = $user->getId();
-        $this->retrievedUsers[$id] = $user;
+        $this->retrievedUsers[$user->getId()] = $user;
+    }
+
+    public function setCacheManager(CacheManagerInterface $cacheManager)
+    {
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -129,25 +142,20 @@ class ProfileImage extends Gravatar
      */
     public function __invoke($user, $options = array(), $attribs = array())
     {
-        if (!isset($options['img_size'])) {
-            $size = $this->getDisplayOptions()->getDefaultImageSize();
-            $options['img_size'] = $size;
-        } else {
-            $size = $options['img_size'];
-        }
         $this->setOptions($options);
         if (!empty($attribs)) {
             $this->setAttribs($attribs);
         }
         if (is_string($user) || is_int($user)) {
             $id = $user;
+            $user = $this->getUser($id);
         } elseif($user instanceof UserInterface) {
             $id = $user->getId();
             $this->setUser($user);
         } else {
                 throw new Exception\InvalidArgumentException(
                     sprintf(
-                        '%s expects an instance of ZfcUser\Entity\UserInterface or user_id as 1st argument, %s provided instead',
+                        '%s expects an instance of ZfcUser\Entity\UserInterface or integer(user_id) as 1st argument, %s provided instead',
                         __METHOD__,
                         is_object($user) ? get_class($user) : gettype($user)
                     )
@@ -155,38 +163,36 @@ class ProfileImage extends Gravatar
         }
 
         
-        if(!$this->getStorageModel()->userImageExists($id) && $this->getDisplayOptions()->getEnableGravatarAlternative()) {
-            $user = $this->getUser($id);
+        if(!$this->getStorageModel()->userImageExists($user) && $this->displayOptions->getEnableGravatarAlternative()) {
             $this->setEmail($user->getEmail());
             $url = $this->getAvatarUrl();
         } else {
-            $params = array('id' => $id, 'size' => $size);
-            if ($this->getDisplayOptions()->getEnableGender()) {
-                $user = $this->getUser($id);
-                if (method_exists($user, 'getGender')) {
-                    $params['gender'] = $user->getGender();
-                }
+            $filterAlias = $this->getFilterAlias();
+            if (
+                $this->cacheManager instanceof CacheManagerInterface && 
+                $this->cacheManager->cacheExists($user, $filterAlias)
+            ) {
+                $url = $this->getView()->basePath() . '/' . $this->cacheManager->getCacheUrl($user, $filterAlias);
+            } else {
+                $url = $this->getView()->url('zfcuser/htimagedisplay', ['id' => $user->getId()]);              
             }
-            $url = $this->getView()->url('zfcuser/htimagedisplay', $params);
         }
         $this->setAttribs(array(
-            'style' => "width:$size" . "px;height:$size" . 'px;',
             'src' => $url
         ));
+
         return $this;
     }
 
     /**
-     * Return valid image tag
+     * Return valid HTML image tag
      *
      * @return string
      */
     public function getImgTag()
     {
-        $html = '<img'
+        return '<img'
             . $this->htmlAttribs($this->getAttribs())
             . $this->getClosingBracket();
-
-        return $html;
     }
 }

@@ -6,12 +6,15 @@ use HtProfileImage\Form\ProfileImageForm;
 use Zend\View\Model;
 use Zend\Mvc\Controller\AbstractActionController;
 use HtProfileImage\Service\ProfileImageServiceInterface;
+use HtImgModule\View\Model\ImageModel;
 
 class ProfileImageController extends AbstractActionController
 {
     protected $profileImageService;
 
     protected $options;
+
+    protected $userMapper;
 
     public function __construct(ProfileImageServiceInterface $profileImageService)
     {
@@ -57,56 +60,20 @@ class ProfileImageController extends AbstractActionController
         ));
     }
 
-    protected function getService()
-    {
-        return $this->getServiceLocator()->get('HtProfileImage\ImageUploadService');
-    }
-
-    public function displayImageAction()
+    public function displayAction()
     {
         $id = $this->params()->fromRoute('id', null);
+        $filter = $this->params()->fromRoute('filter', null);
         if (!$id) {
             return $this->notFoundAction();
         }
-        $gender = $this->params()->fromRoute('gender', null);
-        $size = $this->params()->fromRoute('size', null);
-        $options = $this->getServiceLocator()->get('HtProfileImage\ModuleOptions');
-        $storageModel = $this->getServiceLocator()->get('HtProfileImage\StorageModel');
-        if (!$storageModel->userImageExists($id)) {
-            if ($options->getEnableGender()) {
-                if ($gender === null) {
-                    $user = $this->getUser($id);
-                    $gender = $user->getGender();
-                }
-                if ($gender === GenderManager::GENDER_FEMALE) {
-                    $file = $options->getFemaleImage();
-                } else {
-                    $file = $options->getMaleImage();
-                }
-            } else {
-                $file = $options->getDefaultImage();
-            }
-        } else {
-            $file = $storageModel->getUserImage($id);
+        $user = $this->getUserMapper()->findById($id);
+        if (!$user) {
+            return $this->notFoundAction();
         }
-        $vm =  new ImageModel();
-        if ($options->getServeCroppedImage()) {
-            $thumbnailer = $this->getServiceLocator()->get('WebinoImageThumb');
-            $thumb = $thumbnailer->create($file);
-            if (!$size) {
-                $size = $options->getDefaultImageSize();
-            }
-            $thumb->adaptiveResize($size, $size);
-            $vm->setPhpThumb($thumb);
-        } else {
-            $vm->setFileName($file);
-        }
-        return $vm;
-    }
+        $image = $this->profileImageService->getUserImage($user, $filter);
 
-    protected function getUser($id)
-    {
-        return $this->getServiceLocator()->get('zfcuser_user_mapper')->findById($id);
+        return new ImageModel($image);        
     }
 
     public function getOptions()
@@ -116,5 +83,14 @@ class ProfileImageController extends AbstractActionController
         }
 
         return $this->options;
+    }
+
+    public function getUserMapper()
+    {
+        if (!$this->userMapper) {
+            $this->userMapper = $this->getServiceLocator()->get('zfcuser_user_mapper');
+        }
+
+        return $this->userMapper;
     }
 }

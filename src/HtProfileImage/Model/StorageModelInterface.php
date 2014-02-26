@@ -3,18 +3,19 @@
 namespace HtProfileImage\Model;
 
 use HtProfileImage\Options\StorageOptionsInterface;
+use ZfcUser\Entity\UserInterface;
 
 interface StorageModelInterface
 {
     public function getUploadDirectory();
 
-    public function getUserImage($id);
+    public function getUserImage(UserInterface $user);
 
     public function getUserImageExtension();
 
-    public function getUserImageWithoutExtension($id);
+    public function getUserImageWithoutExtension(UserInterface $user);
 
-    public function userImageExists($id);
+    public function userImageExists(UserInterface $user);
 
-    public function deleteUserImage($id);
+    public function deleteUserImage(UserInterface $user);
 }

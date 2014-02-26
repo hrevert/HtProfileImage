@@ -3,11 +3,12 @@
 namespace HtProfileImage\Model;
 
 use HtProfileImage\Options\StorageOptionsInterface;
+use ZfcUser\Entity\UserInterface;
 
 class StorageModel implements StorageModelInterface
 {
     // extension of image
-    const USER_IMAGE_EXTENSION = "png";
+    const USER_IMAGE_EXTENSION = 'png';
 
     /**
      * @var StorageOptionsInterface
@@ -26,7 +27,8 @@ class StorageModel implements StorageModelInterface
     }
 
     /**
-     * gets StorageOptionsInterface
+     * Gets StorageOptionsInterface
+     *
      * @return StorageOptionsInterface
      */
     public function getStorageOptions()
@@ -35,7 +37,8 @@ class StorageModel implements StorageModelInterface
     }
 
     /**
-     * gets upload directory where profile images are uploaded
+     * Gets upload directory where profile images are uploaded
+     *
      * @return string
      */
     public function getUploadDirectory()
@@ -44,17 +47,20 @@ class StorageModel implements StorageModelInterface
     }
 
     /**
-     * gets path to image of a user
+     * Gets path to image of a user
+     *
+     * @param UserInterface $user
      * @return string
      */
-    public function getUserImage($id)
+    public function getUserImage(UserInterface $user)
     {
-         return $this->getUserImageWithoutExtension($id).'.'.$this->getUserImageExtension();
+         return $this->getUserImageWithoutExtension($user) . '.' . $this->getUserImageExtension();
     }
 
 
     /**
-     * gets extension with which a user image is saved
+     * Gets extension with which a user image is saved
+     *
      * @return string
      */
     public function getUserImageExtension()
@@ -63,32 +69,35 @@ class StorageModel implements StorageModelInterface
     }
 
     /**
-     * gets path to image of a user(without extension(png))
+     * Gets path to image of a user(without extension(png))
+     *
      * @return string
      */
-    public function getUserImageWithoutExtension($id)
+    public function getUserImageWithoutExtension(UserInterface $user)
     {
-        return $this->getUploadDirectory().'/'.$id;
+        return $this->getUploadDirectory() . '/' . $user->getId();
     }
 
     /**
-     * checks if user has uploaded his image(check if user image exists)
-     * @param int $id
+     * Checks if user has uploaded his image(check if user image exists)
+     *
+     * @param UserInterface $user
      * @return bool
      */
-    public function userImageExists($id)
+    public function userImageExists(UserInterface $user)
     {
-        return is_readable($this->getUserImage($id));
+        return is_readable($this->getUserImage($user));
     }
 
     /**
-     * deletes if user image exists
-     * @param int $id
+     * Deletes if user image exists
+     *
+     * @param UserInterface $user
      * @return void
      */
-    public function deleteUserImage($id)
+    public function deleteUserImage(UserInterface $user)
     {
-        $file = $this->getUserImage($id);
+        $file = $this->getUserImage($user);
         if (is_readable($file)) {
             unlink($file);
         }

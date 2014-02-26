@@ -23,10 +23,10 @@ return array(
                     'htimagedisplay' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/display-image/:id/[:size/][:gender/]',
+                            'route' => '/display-image/:id[/]',
                             'defaults' => array(
                                 'controller' => 'HtProfileImage\ProfileImage',
-                                'action' => 'display-image'
+                                'action' => 'display'
                             )
                         )
                     ),
@@ -51,7 +51,15 @@ return array(
                     'height' => 120,
                     'mode' => 'outbound '
                 ]
-            ],        
+            ], 
+            'htprofileimage_display' => [  // # Transforms 50x40 to 32x32, while cropping the width
+                'type' => 'thumbnail',
+                'options' => [
+                    'width' => 100,
+                    'height' => 100,
+                    'mode' => 'outbound '
+                ]
+            ],                     
         ]   
     ]
 );
