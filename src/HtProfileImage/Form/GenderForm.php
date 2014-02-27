@@ -2,7 +2,7 @@
 
 namespace HtProfileImage\Form;
 
-use HCommons\Model\GenderManager;
+use HtProfileImage\Entity\User;
 use Zend\Form\Form;
 
 class GenderForm extends Form
@@ -16,10 +16,10 @@ class GenderForm extends Form
             'options' => array(
                 'label' => 'Gender',
                 'value_options' => array(
-                     GenderManager::GENDER_MALE => "Male",
-                     GenderManager::GENDER_FEMALE => "Female",
+                     User::GENDER_MALE => "Male",
+                     User::GENDER_FEMALE => "Female",
                 )
             )
-        ));        
+        ));
     }
 }

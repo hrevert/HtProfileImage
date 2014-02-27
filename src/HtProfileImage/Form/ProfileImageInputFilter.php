@@ -1,9 +1,9 @@
 <?php
-    
+
 namespace HtProfileImage\Form;
 
 use Zend\InputFilter\InputFilter;
-use ZfcUser\Entity\User;
+use ZfcUser\Entity\UserInterface;
 
 class ProfileImageInputFilter extends InputFilter
 {
@@ -12,34 +12,15 @@ class ProfileImageInputFilter extends InputFilter
 
     protected $user;
 
-    public function __construct($uploadDir)
-    {
-        $this->setUploadDir($uploadDir);
-    }
-
-    public function setUploadDir($uploadDir)
+    public function __construct($uploadDir, UserInterface $user)
     {
         $this->uploadDir = $uploadDir;
-    }
-
-    public function getUploadDir()
-    {
-        return $this->uploadDir;
-    }
-
-    public function setUser(User $user)
-    {
         $this->user = $user;
     }
 
     public function getUploadTarget()
     {
-        return $this->getUploadDir()."/".$this->getUser()->getId();
-    }
-
-    public function getUser()
-    {
-        return $this->user;
+        return $this->uploadDir . '/' . $this->user->getId();
     }
 
     public function init()
@@ -54,9 +35,8 @@ class ProfileImageInputFilter extends InputFilter
                         'target' => $this->getUploadTarget(),
                         'overwrite' => true,
                     )
-                )            
-            )            
+                )
+            )
         ));
     }
 }
-

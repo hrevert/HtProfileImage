@@ -6,11 +6,10 @@ use ZfcBase\InputFilter\ProvidesEventsInputFilter;
 use Zend\Validator\NotEmpty;
 use Zend\Validator\File\MimeType;
 
-class ProfileImageValidator extends ProvidesEventsInputFilter 
+class ProfileImageValidator extends ProvidesEventsInputFilter
 {
     public function __construct()
     {
-
         $this->add(array(
             'name' => 'image',
             'required' => true,
@@ -35,11 +34,10 @@ class ProfileImageValidator extends ProvidesEventsInputFilter
                         )
                     )
                 )
-            )           
+            )
         ));
 
         $this->getEventManager()->trigger("init", $this);
 
-    }   
+    }
 }
-

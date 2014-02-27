@@ -15,25 +15,11 @@ $settings = array(
     //'upload_directory' => 'data/uploads/profile-images',
 
     /**
-     * Default Image Size
+     * Storage Filter
      *
-     * Default size of image rendered in view templates
-     * You can also pass this value from view helper(profileImage)
-     *
-     * Default value: 80
-     * Accepted values: size (in pixel) 
+     * Filter Alias for new uploading images
      */
-    //'default_image_size' => 80,
-
-    /**
-     * Size of image to store
-     *
-     * The size of image(of newly uploaded images) to store 
-     *
-     * Default value: 160
-     * Accepted values: size (in pixel) 
-     */
-    //'stored_image_size' => 160,
+    //'storage_filter' => 'htprofileimage_store,
 
     /**
      * Alternative when no image is found
@@ -44,12 +30,12 @@ $settings = array(
      * Default value: true
      * Accepted values: boolean true or false
      */
-    //'enableGravatarAlternative' => true,
+    //'enable_gravatar_alternative' => true,
 
     /**
      * Alternative when no image is found
      *
-     * Whether or not to set gender-wise default image 
+     * Whether or not to set gender-wise default image
      * When gravatar is disabled and user has not uploaded his image
      *
      * Default value: false
@@ -60,7 +46,7 @@ $settings = array(
     /**
      * Alternative when no image is found
      *
-     * Default image 
+     * Default image
      * When gravatar is disabled and user has not uploaded his image and gender-wise image is disabled
      *
      * Accepted values: "path/to/image.ext"
@@ -88,55 +74,31 @@ $settings = array(
     //'female_image' => '',
 
     /**
-     * Crop image or not
+     * Display Filter
      *
-     * Whether or not to crop image when called from view helper(profileImage)
-     *
-     * Default value: true
-     * Accepted values: boolean true or false
+     * Filter Alias for for display images
+     * You can also pass this value from view helper(profileImage)
      */
-    //'serve_cropped_image' => true
+    //'storage_filter' => 'htprofileimage_display,
 
     /**
      * Post Upload Route
      *
-     * Route to redirect after a user has uploaded his/her image 
+     * Route to redirect after a user has uploaded his/her image
      * Default value: 'zfcuser'
      * If set to null, user will not be redirected
      */
     //'post_upload_route' => 'zfcuser',
 
     /**
-    * Resizing Image for storage
-    *
-    * How do you want to store a newly uploaded image? Store as it is?
-    * If you want to crop(in square), then use the above `stored_image_size` option
-    * Else use the below options to resize a newly uploaded image
-    *
-    */
-    'storage_resizer' => array(
-        /*
-        * Resizer Name
-        *
-        * Fully Qualified ClassName of Resizer
-        * It should implement HCommons\Image\ResizingInterface
-        * 
-        * Available Resizers
-        * 1) HCommons\Image\BasicResizing
-        * 2) HCommons\Image\Crop
-        * 3) HCommons\Image\CropFromCenter
-        * 4) HCommons\Image\AdaptiveResizing
-        * 5) HCommons\Image\FitToWidth
-        * 6) HCommons\Image\FitToHeight
-        *
-        */
-        //'name' => '',// 
-
-
-        /*'options' => array(
-        
-        )*/
-    )
+     * Enable Cache
+     *
+     * Do you want to store cache of filtered image in the web directory
+     *
+     * Default: value
+     * Accepted Values: bool
+     */
+    // 'enable_cache' => true,
 );
 
 /**
