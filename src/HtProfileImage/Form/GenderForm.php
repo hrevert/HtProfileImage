@@ -20,6 +20,6 @@ class GenderForm extends Form
                      User::GENDER_FEMALE => "Female",
                 )
             )
-        ));        
+        ));
     }
 }

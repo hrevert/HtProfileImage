@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace HtProfileImage\View\Helper;
 
 use Zend\View\Helper\Gravatar;
@@ -92,18 +92,18 @@ class ProfileImage extends Gravatar
     }
 
     /**
-     * gets StorageModelInterface 
+     * gets StorageModelInterface
      * @return StorageModelInterface
-     */    
+     */
     protected function getStorageModel()
     {
         return $this->storageModel;
     }
 
     /**
-     * gets DisplayOptionsInterface 
+     * gets DisplayOptionsInterface
      * @return DisplayOptionsInterface
-     */ 
+     */
     protected function getDisplayOptions()
     {
         return $this->displayOptions;
@@ -130,7 +130,7 @@ class ProfileImage extends Gravatar
      * stores User data to prevent from querying to database
      * it only queries one time for a user
      *
-     * @param User $user 
+     * @param  User $user
      * @return void
      */
     protected function setUser(UserInterface $user)
@@ -146,9 +146,9 @@ class ProfileImage extends Gravatar
     /**
      * gets image of a user
      *
-     * @param User|int $user (instance of User or user_id)
-     * @param array $options
-     * @param array $attribs      
+     * @param  User|int $user    (instance of User or user_id)
+     * @param  array    $options
+     * @param  array    $attribs
      * @return self
      */
     public function __invoke($user, $options = array(), $attribs = null)
@@ -170,22 +170,21 @@ class ProfileImage extends Gravatar
                         __METHOD__,
                         is_object($user) ? get_class($user) : gettype($user)
                     )
-                );            
+                );
         }
 
-        
-        if(!$this->getStorageModel()->userImageExists($user) && $this->displayOptions->getEnableGravatarAlternative()) {
+        if (!$this->getStorageModel()->userImageExists($user) && $this->displayOptions->getEnableGravatarAlternative()) {
             $this->setEmail($user->getEmail());
             $url = $this->getAvatarUrl();
         } else {
             $filterAlias = $this->getFilterAlias();
             if (
-                $this->cacheManager instanceof CacheManagerInterface && 
+                $this->cacheManager instanceof CacheManagerInterface &&
                 $this->cacheManager->cacheExists($user, $filterAlias)
             ) {
                 $url = $this->getView()->basePath() . '/' . $this->cacheManager->getCacheUrl($user, $filterAlias);
             } else {
-                $url = $this->getView()->url('zfcuser/htimagedisplay', ['id' => $user->getId()]);              
+                $url = $this->getView()->url('zfcuser/htimagedisplay', ['id' => $user->getId()]);
             }
         }
         $this->setAttribs(array(

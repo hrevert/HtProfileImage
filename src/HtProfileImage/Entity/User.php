@@ -17,7 +17,7 @@ class User extends \ZfcUser\Entity\User
     /**
      * Sets gender
      *
-     * @param int $gender
+     * @param  int                                $gender
      * @return void
      * @throws Exception\InvalidArgumentException
      */

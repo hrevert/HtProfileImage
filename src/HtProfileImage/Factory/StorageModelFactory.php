@@ -9,11 +9,11 @@ class StorageModelFactory implements FactoryInterface
 {
     /**
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return StorageModel
      */
     public function createService(ServiceLocatorInterface $sm)
     {
-        return new StorageModel($sm->get('HtProfileImage\ModuleOptions'));       
-    }    
+        return new StorageModel($sm->get('HtProfileImage\ModuleOptions'));
+    }
 }

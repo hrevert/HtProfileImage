@@ -1,8 +1,7 @@
 <?php
-    
+
 namespace HtProfileImage\Model;
 
-use HtProfileImage\Options\StorageOptionsInterface;
 use ZfcUser\Entity\UserInterface;
 
 interface StorageModelInterface

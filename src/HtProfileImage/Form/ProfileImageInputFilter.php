@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace HtProfileImage\Form;
 
 use Zend\InputFilter\InputFilter;
@@ -35,9 +35,8 @@ class ProfileImageInputFilter extends InputFilter
                         'target' => $this->getUploadTarget(),
                         'overwrite' => true,
                     )
-                )            
-            )            
+                )
+            )
         ));
     }
 }
-

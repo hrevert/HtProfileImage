@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace HtProfileImage\Options;
 
 use Zend\Stdlib\AbstractOptions;
@@ -91,7 +91,7 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
         return $this->enableGravatarAlternative;
     }
 
-    public function setEnableGravatarAlternative($enableGravatarAlternative) 
+    public function setEnableGravatarAlternative($enableGravatarAlternative)
     {
         $this->enableGravatarAlternative = (bool) $enableGravatarAlternative;
     }

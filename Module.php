@@ -2,7 +2,6 @@
 
 namespace HtProfileImage;
 
-use HtProfileImage\Form\GenderForm;
 use Zend\Mvc\MvcEvent;
 use Zend\EventManager\EventInterface;
 
@@ -54,17 +53,16 @@ class Module
                 'HtProfileImage\Service\CacheManager' => 'HtProfileImage\Factory\CacheManagerFactory',
             ],
             'aliases' => [
-                
+
             ]
         ];
     }
-    
 
     public function getViewHelperConfig()
     {
         return [
             'factories' => [
-                'HtProfileImage\View\Helper\ProfileImage' => 'HtProfileImage\View\Helper\Factory\ProfileImageFactory',            
+                'HtProfileImage\View\Helper\ProfileImage' => 'HtProfileImage\View\Helper\Factory\ProfileImageFactory',
             ],
             'aliases' => [
                 'htProfileImage' => 'HtProfileImage\View\Helper\ProfileImage'

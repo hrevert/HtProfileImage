@@ -29,5 +29,4 @@ class ProfileImageForm extends ProvidesEventsForm
         $this->getEventManager()->trigger('init', $this);
     }
 
-
-} 
+}

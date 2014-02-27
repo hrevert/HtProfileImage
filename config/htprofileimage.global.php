@@ -35,7 +35,7 @@ $settings = array(
     /**
      * Alternative when no image is found
      *
-     * Whether or not to set gender-wise default image 
+     * Whether or not to set gender-wise default image
      * When gravatar is disabled and user has not uploaded his image
      *
      * Default value: false
@@ -46,7 +46,7 @@ $settings = array(
     /**
      * Alternative when no image is found
      *
-     * Default image 
+     * Default image
      * When gravatar is disabled and user has not uploaded his image and gender-wise image is disabled
      *
      * Accepted values: "path/to/image.ext"
@@ -77,14 +77,14 @@ $settings = array(
      * Display Filter
      *
      * Filter Alias for for display images
-     * You can also pass this value from view helper(profileImage) 
+     * You can also pass this value from view helper(profileImage)
      */
     //'storage_filter' => 'htprofileimage_display,
 
     /**
      * Post Upload Route
      *
-     * Route to redirect after a user has uploaded his/her image 
+     * Route to redirect after a user has uploaded his/her image
      * Default value: 'zfcuser'
      * If set to null, user will not be redirected
      */

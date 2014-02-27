@@ -51,7 +51,7 @@ return [
                     'height' => 120,
                     'mode' => 'outbound '
                 ]
-            ], 
+            ],
             'htprofileimage_display' => [
                 'type' => 'thumbnail',
                 'options' => [
@@ -59,7 +59,7 @@ return [
                     'height' => 100,
                     'mode' => 'outbound '
                 ]
-            ],                     
-        ]   
+            ],
+        ]
     ]
 ];

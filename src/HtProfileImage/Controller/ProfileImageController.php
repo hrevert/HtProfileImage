@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace HtProfileImage\Controller;
 
 use HtProfileImage\Form\ProfileImageForm;
@@ -54,7 +54,7 @@ class ProfileImageController extends AbstractActionController
                 if ($request->isXmlHttpRequest()) {
                     return new Model\JsonModel(array(
                         'uploaded' => true
-                    ));                    
+                    ));
                 } elseif ($options->getPostUploadRoute()) {
                         return call_user_func_array(array($this->redirect(), 'toRoute'), (array) $options->getPostUploadRoute());
                 }
@@ -64,9 +64,9 @@ class ProfileImageController extends AbstractActionController
                     return new Model\JsonModel(array(
                         'error' => true,
                         'messages' => $form->getMessages()
-                    ));                    
+                    ));
                 }
-                                 
+
             }
         }
 
@@ -93,13 +93,13 @@ class ProfileImageController extends AbstractActionController
         }
         $image = $this->profileImageService->getUserImage($user, $filter);
 
-        return new ImageModel($image);        
+        return new ImageModel($image);
     }
 
     /**
      * Gets options
      *
-     * @return \HtProfileImage\Options\ModuleOptionsInterface 
+     * @return \HtProfileImage\Options\ModuleOptionsInterface
      */
     public function getOptions()
     {

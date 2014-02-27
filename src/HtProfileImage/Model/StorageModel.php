@@ -49,14 +49,13 @@ class StorageModel implements StorageModelInterface
     /**
      * Gets path to image of a user
      *
-     * @param UserInterface $user
+     * @param  UserInterface $user
      * @return string
      */
     public function getUserImage(UserInterface $user)
     {
          return $this->getUserImageWithoutExtension($user) . '.' . $this->getUserImageExtension();
     }
-
 
     /**
      * Gets extension with which a user image is saved
@@ -81,7 +80,7 @@ class StorageModel implements StorageModelInterface
     /**
      * Checks if user has uploaded his image(check if user image exists)
      *
-     * @param UserInterface $user
+     * @param  UserInterface $user
      * @return bool
      */
     public function userImageExists(UserInterface $user)
@@ -92,7 +91,7 @@ class StorageModel implements StorageModelInterface
     /**
      * Deletes if user image exists
      *
-     * @param UserInterface $user
+     * @param  UserInterface $user
      * @return void
      */
     public function deleteUserImage(UserInterface $user)

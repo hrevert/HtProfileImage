@@ -1,5 +1,5 @@
 <?php
-    
+
 namespace HtProfileImage\Options;
 
 interface StorageOptionsInterface

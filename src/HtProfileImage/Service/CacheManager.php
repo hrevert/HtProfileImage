@@ -22,7 +22,7 @@ class CacheManager implements CacheManagerInterface
      * Constructor
      *
      * @param HtImgCacheManagerInterface $cacheManager
-     * @param StorageModelInterface $storageModel
+     * @param StorageModelInterface      $storageModel
      */
     public function __construct(HtImgCacheManagerInterface $cacheManager, StorageModelInterface $storageModel)
     {
@@ -36,10 +36,10 @@ class CacheManager implements CacheManagerInterface
     public function cacheExists(UserInterface $user, $filter)
     {
         return $this->cacheManager->cacheExists(
-            'user/' . $user->getId(), 
-            $filter, 
+            'user/' . $user->getId(),
+            $filter,
             $this->storageModel->getUserImageExtension()
-        );        
+        );
     }
 
     /**
@@ -48,10 +48,10 @@ class CacheManager implements CacheManagerInterface
     public function getCacheUrl(UserInterface $user, $filter)
     {
         return $this->cacheManager->getCacheUrl(
-            'user/' . $user->getId(), 
-            $filter, 
+            'user/' . $user->getId(),
+            $filter,
             $this->storageModel->getUserImageExtension()
-        );        
+        );
     }
 
     /**
@@ -60,23 +60,23 @@ class CacheManager implements CacheManagerInterface
     public function getCachePath(UserInterface $user, $filter)
     {
         return $this->cacheManager->getCachePath(
-            'user/' . $user->getId(), 
-            $filter, 
+            'user/' . $user->getId(),
+            $filter,
             $this->storageModel->getUserImageExtension()
-        );        
+        );
     }
 
     /**
      * {@inheritDoc}
      */
-    public function createCache(UserInterface $user, $filter, ImageInterface $image) 
+    public function createCache(UserInterface $user, $filter, ImageInterface $image)
     {
         $this->cacheManager->createCache(
-            'user/' . $user->getId(), 
-            $filter, 
+            'user/' . $user->getId(),
+            $filter,
             $image,
             $this->storageModel->getUserImageExtension()
-        );        
+        );
     }
 
     /**
@@ -85,7 +85,7 @@ class CacheManager implements CacheManagerInterface
     public function deleteCache(UserInterface $user, $filter)
     {
         $cachePath = $this->getCachePath($user, $filter);
-        
-        return is_readable($cachePath) ? unlink($cachePath) : false;          
+
+        return is_readable($cachePath) ? unlink($cachePath) : false;
     }
 }
