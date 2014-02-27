@@ -9,16 +9,40 @@ class User extends \ZfcUser\Entity\User
 
     const GENDER_FEMALE = 0;
 
-    protected $gender;
+    /**
+     * @var int
+     */
+    protected $gender = self::GENDER_MALE;
 
+    /**
+     * Sets gender
+     *
+     * @param int $gender
+     * @return void
+     * @throws Exception\InvalidArgumentException
+     */
     public function setGender($gender)
     {
         if (!in_array($gender, [static::GENDER_MALE, static::GENDER_FEMALE])) {
-            throw new Exception\InvalidArgumentException();
+            throw new Exception\InvalidArgumentException(
+                sprintf(
+                    '%s expects parameter 1 to be one of %s or %s, %s provided instead',
+                    __METHOD__,
+                    static::GENDER_MALE,
+                    static::GENDER_FEMALE,
+                    $gender
+                )
+            );
         }
+
         $this->gender = (int) $gender;
     }
 
+    /**
+     * Gets gender
+     *
+     * @return int $gender
+     */
     public function getGender()
     {
         return $this->gender;

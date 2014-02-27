@@ -14,11 +14,11 @@ class Module
         $serviceManager = $app->getServiceManager();
         $eventManager = $app->getEventManager();
         $sharedManager = $eventManager->getSharedManager();
-        $sharedManager->attach('HtProfileImage\Service\ProfileImageService', 'uploadImage.post', function (EventInterface $e) use ($serviceManager) {
+        $sharedManager->attach('HtProfileImage\Service\ProfileImageService ', 'uploadImage.post', function (EventInterface $e) use ($serviceManager) {
             $cacheManager = $serviceManager->get('HtProfileImage\Service\CacheManager');
             $options = $serviceManager->get('HtProfileImage\ModuleOptions');
             $cacheManager->deleteCache($sharedManager->get('zfcuser_auth_service'), $options->getDisplayFilter());
-        }, 10);
+        }, 10000);
     }
 
     public function getConfig()

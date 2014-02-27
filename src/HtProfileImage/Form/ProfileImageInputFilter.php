@@ -20,7 +20,7 @@ class ProfileImageInputFilter extends InputFilter
 
     public function getUploadTarget()
     {
-        return $this->uploadDir.'/'.$this->user->getId();
+        return $this->uploadDir . '/' . $this->user->getId();
     }
 
     public function init()

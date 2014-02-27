@@ -1,50 +1,50 @@
 <?php
 
-return array(
-    'controllers' => array(
-        'factories' => array(
+return [
+    'controllers' => [
+        'factories' => [
             'HtProfileImage\ProfileImage' => 'HtProfileImage\Controller\Factory\ProfileImageControllerFactory'
-        ),
-    ),
-    'router' => array(
-        'routes' => array(
-            'zfcuser' => array(
-                'child_routes' => array(
-                    'htimageupload' => array(
+        ],
+    ],
+    'router' => [
+        'routes' => [
+            'zfcuser' => [
+                'child_routes' => [
+                    'htimageupload' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/upload-image',
-                            'defaults' => array(
+                            'defaults' => [
                                 'controller' => 'HtProfileImage\ProfileImage',
                                 'action' => 'upload'
-                            )
-                        )
-                    ),
-                    'htimagedisplay' => array(
+                            ]
+                        ]
+                    ],
+                    'htimagedisplay' => [
                         'type' => 'Segment',
-                        'options' => array(
+                        'options' => [
                             'route' => '/display-image/:id[/]',
-                            'defaults' => array(
+                            'defaults' => [
                                 'controller' => 'HtProfileImage\ProfileImage',
                                 'action' => 'display'
-                            )
-                        )
-                    ),
-                )
-            )
-        )
-    ),
-    'view_manager' => array(
-        'template_path_stack' => array(
+                            ]
+                        ]
+                    ],
+                ]
+            ]
+        ]
+    ],
+    'view_manager' => [
+        'template_path_stack' => [
             'HtProfileImage' => __DIR__ . '/../view',
-        ),
-        'template_map' => array(
+        ],
+        'template_map' => [
             'zfc-user/user/index' =>  __DIR__ . '/../view/zfc-user/user/index.phtml'
-        )
-    ),
+        ]
+    ],
     'htimg' => [
         'filters' => [
-            'htprofileimage_store' => [  // # Transforms 50x40 to 32x32, while cropping the width
+            'htprofileimage_store' => [
                 'type' => 'thumbnail',
                 'options' => [
                     'width' => 120,
@@ -52,7 +52,7 @@ return array(
                     'mode' => 'outbound '
                 ]
             ], 
-            'htprofileimage_display' => [  // # Transforms 50x40 to 32x32, while cropping the width
+            'htprofileimage_display' => [
                 'type' => 'thumbnail',
                 'options' => [
                     'width' => 100,
@@ -62,4 +62,4 @@ return array(
             ],                     
         ]   
     ]
-);
+];

@@ -12,17 +12,35 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
 {
     use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 
+    /**
+     * @var \HtProfileImage\Options\ModuleOptionsInterface
+     */
     protected $options;
 
+    /**
+     * @var \HtProfileImage\Model\StorageModelInterface
+     */
     protected $storageModel;
 
+    /**
+     * @var \HtImgModule\Imagine\Filter\FilterManagerInterface
+     */
     protected $filterManager;
 
+    /**
+     * @var \Imagine\Image\ImagineInterface
+     */
     protected $imagine;
 
+    /**
+     * @var \HtProfileImage\Service\CacheManagerInterface
+     */
     protected $cacheManager;
 
-    public function uploadImage(UserInterface $user, array $files)
+    /**
+     * {@inheritDoc}
+     */
+    public function storeImage(UserInterface $user, array $files)
     {
         $form = $this->getServiceLocator()->get('HtProfileImage\ProfileImageForm');
         $this->getEventManager()->trigger(__METHOD__, $this, array(
@@ -65,6 +83,9 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         return false;               
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getUserImage(UserInterface $user, $filterAlias = null)
     {
         if ($this->getStorageModel()->userImageExists($user)) {
@@ -95,16 +116,20 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         }
         if ($this->getOptions()->getEnableCache()) {
             $this->getCacheManager()->createCache(
-                'user/'. $user->getId(), 
+                $user, 
                 $filterAlias, 
-                $image,
-                $this->getStorageModel()->getUserImageExtension()
+                $image
             );
         }
 
         return $image;
     }
 
+    /**
+     * Gets options
+     *
+     * @return \HtProfileImage\Options\ModuleOptionsInterface 
+     */
     public function getOptions()
     {
         if (!$this->options) {
@@ -114,6 +139,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         return $this->options;
     }
 
+    /**
+     * Gets storageModel
+     *
+     * @return \HtProfileImage\Model\StorageModel 
+     */
     public function getStorageModel()
     {
         if (!$this->storageModel) {
@@ -123,6 +153,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         return $this->storageModel;
     }
 
+    /**
+     * Gets filterManager
+     *
+     * @return \HtImgModule\Imagine\Filter\FilterManager
+     */
     public function getFilterManager()
     {
         if (!$this->filterManager) {
@@ -132,6 +167,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         return $this->filterManager;
     }
 
+    /**
+     * Gets imagine
+     *
+     * @return \Imagine\Image\ImagineInterface
+     */
     public function getImagine()
     {
         if (!$this->imagine) {
@@ -141,10 +181,15 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         return $this->imagine;
     }
 
+    /**
+     * Gets cacheManager
+     *
+     * @return \HtProfileImage\Service\CacheManager
+     */
     public function getCacheManager()
     {
         if (!$this->cacheManager) {
-            $this->cacheManager = $this->getServiceLocator()->get('HtImgModule\Service\CacheManager');
+            $this->cacheManager = $this->getServiceLocator()->get('HtProfileImage\Service\CacheManager');
         }
 
         return $this->cacheManager;

@@ -2,7 +2,7 @@
 namespace HtProfileImage\Service;
 
 use ZfcUser\Entity\UserInterface;
-use Imagine\Image\ImageInterace;
+use Imagine\Image\ImageInterface;
 
 interface CacheManagerInterface
 {
@@ -38,10 +38,10 @@ interface CacheManagerInterface
      *
      * @param UserInterface $user
      * @param string $filter
-     * @param ImageInterace $image
+     * @param ImageInterface $image
      * @return void
      */
-    public function createCache(UserInterface $user, $filter, ImageInterace $image);
+    public function createCache(UserInterface $user, $filter, ImageInterface $image);
     
     /**
      * Deletes a new of image of a user

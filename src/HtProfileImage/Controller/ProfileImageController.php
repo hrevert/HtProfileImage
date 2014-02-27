@@ -10,17 +10,34 @@ use HtImgModule\View\Model\ImageModel;
 
 class ProfileImageController extends AbstractActionController
 {
+    /**
+     * @var ProfileImageServiceInterface
+     */
     protected $profileImageService;
 
+    /**
+     * @var \HtProfileImage\Options\ModuleOptionsInterface
+     */
     protected $options;
 
+    /**
+     * @var \ZfcUser\Mapper\UserInterface
+     */
     protected $userMapper;
 
+    /**
+     *  Constructor
+     *
+     * @param ProfileImageServiceInterface $profileImageService
+     */
     public function __construct(ProfileImageServiceInterface $profileImageService)
     {
         $this->profileImageService = $profileImageService;
     }
 
+    /**
+     * Uploads User Image
+     */
     public function uploadAction()
     {
         $authenticationService = $this->getServiceLocator()->get('zfcuser_auth_service');
@@ -33,7 +50,7 @@ class ProfileImageController extends AbstractActionController
         $request = $this->getRequest();
         $imageUploaded = false;
         if ($request->isPost()) {
-            if ($this->profileImageService->uploadImage($user, $request->getFiles()->toArray())) {
+            if ($this->profileImageService->storeImage($user, $request->getFiles()->toArray())) {
                 if ($request->isXmlHttpRequest()) {
                     return new Model\JsonModel(array(
                         'uploaded' => true
@@ -60,6 +77,9 @@ class ProfileImageController extends AbstractActionController
         ));
     }
 
+    /**
+     * Displays User Image
+     */
     public function displayAction()
     {
         $id = $this->params()->fromRoute('id', null);
@@ -76,6 +96,11 @@ class ProfileImageController extends AbstractActionController
         return new ImageModel($image);        
     }
 
+    /**
+     * Gets options
+     *
+     * @return \HtProfileImage\Options\ModuleOptionsInterface 
+     */
     public function getOptions()
     {
         if (!$this->options) {
@@ -85,6 +110,11 @@ class ProfileImageController extends AbstractActionController
         return $this->options;
     }
 
+    /**
+     * Gets userMapper
+     *
+     * @return \ZfcUser\Mapper\UserInterface
+     */
     public function getUserMapper()
     {
         if (!$this->userMapper) {

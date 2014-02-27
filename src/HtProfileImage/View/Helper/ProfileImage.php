@@ -66,11 +66,22 @@ class ProfileImage extends Gravatar
         $this->userMapper = $userMapper;
     }
 
+    /**
+     * Sets filterAlias
+     *
+     * @param string filterAlias
+     * @return void
+     */
     public function setFilterAlias($filterAlias)
     {
         $this->filterAlias = $filterAlias;
     }
 
+    /**
+     * Gets filterAlias
+     *
+     * @return filterAlias
+     */
     public function getFilterAlias()
     {
         if (!$this->filterAlias) {
@@ -140,16 +151,16 @@ class ProfileImage extends Gravatar
      * @param array $attribs      
      * @return self
      */
-    public function __invoke($user, $options = array(), $attribs = array())
+    public function __invoke($user, $options = array(), $attribs = null)
     {
         $this->setOptions($options);
-        if (!empty($attribs)) {
+        if ($attribs !== null) {
             $this->setAttribs($attribs);
         }
         if (is_string($user) || is_int($user)) {
             $id = $user;
             $user = $this->getUser($id);
-        } elseif($user instanceof UserInterface) {
+        } elseif ($user instanceof UserInterface) {
             $id = $user->getId();
             $this->setUser($user);
         } else {

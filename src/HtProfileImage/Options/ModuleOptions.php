@@ -4,9 +4,7 @@ namespace HtProfileImage\Options;
 
 use Zend\Stdlib\AbstractOptions;
 
-class ModuleOptions extends AbstractOptions implements 
-    StorageOptionsInterface, 
-    DisplayOptionsInterface
+class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 {
     protected $uploadDirectory = 'data/uploads/profile-images';
 

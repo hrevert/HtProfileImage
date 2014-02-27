@@ -2,7 +2,7 @@
 namespace HtProfileImage\Service;
 
 use ZfcUser\Entity\UserInterface;
-use Imagine\Image\ImageInterace;
+use Imagine\Image\ImageInterface;
 use HtImgModule\Service\CacheManagerInterface as HtImgCacheManagerInterface;
 use HtProfileImage\Model\StorageModelInterface;
 
@@ -69,7 +69,7 @@ class CacheManager implements CacheManagerInterface
     /**
      * {@inheritDoc}
      */
-    public function createCache(UserInterface $user, $filter, ImageInterace $image) 
+    public function createCache(UserInterface $user, $filter, ImageInterface $image) 
     {
         $this->cacheManager->createCache(
             'user/' . $user->getId(), 

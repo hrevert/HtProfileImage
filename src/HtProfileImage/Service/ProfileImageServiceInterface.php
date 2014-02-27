@@ -6,5 +6,21 @@ use HtProfileImage\Form\ProfileImageForm;
 
 interface ProfileImageServiceInterface
 {
-    public function uploadImage(UserInterface $user, array $files);
+    /**
+     * Stores user image if valid 
+     *
+     * @param UserInterface $user
+     * @param array $files
+     * @return bool
+     */
+    public function storeImage(UserInterface $user, array $files);
+
+    /**
+     * Gets user image
+     *
+     * @param UserInterface $user
+     * @param string $filterAlias   Filter Alias
+     * @return \Imagine\Image\ImageInterface
+     */
+    public function getUserImage(UserInterface $user, $filterAlias = null);
 }
