@@ -80,7 +80,7 @@ $settings = array(
      * Filter Alias for for display images
      * You can also pass this value from view helper(profileImage)
      */
-    //'storage_filter' => 'htprofileimage_display,
+    //'display_filter' => 'htprofileimage_display,
 
     /**
      * Post Upload Route
