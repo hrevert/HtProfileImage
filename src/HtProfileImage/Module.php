@@ -12,26 +12,10 @@ use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
 class Module implements 
     AutoloaderProviderInterface,
-    BootstrapListenerInterface,
     ConfigProviderInterface,
     ServiceProviderInterface,
     ViewHelperProviderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function onBootstrap(EventInterface $e)
-    {
-        $app = $e->getApplication();
-        $serviceManager = $app->getServiceManager();
-        $eventManager = $app->getEventManager();
-        $sharedManager = $eventManager->getSharedManager();
-        $sharedManager->attach('HtProfileImage\Service\ProfileImageService ', 'uploadImage.post', function (EventInterface $e) use ($serviceManager) {
-            $cacheManager = $serviceManager->get('HtProfileImage\Service\CacheManager');
-            $options = $serviceManager->get('HtProfileImage\ModuleOptions');
-            $cacheManager->deleteCache($sharedManager->get('zfcuser_auth_service'), $options->getDisplayFilter());
-        }, 10000);
-    }
 
     /**
      * {@inheritDoc}

@@ -72,10 +72,10 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
                 $image->save($newFileName); // store the image
             }
             unlink($file);
-            $this->getEventManager()->trigger(__METHOD__ . '.post', $this, array(
-                'image_path' => $newFileName,
-                'user' => $user
-            ));
+            $this->getEventManager()->getSharedManager()->attach(get_called_class(), __METHOD__.'.post', function($e){
+                $this->deleteCache();
+            });
+            $this->getEventManager()->trigger(__METHOD__.'.post', $this, array('image_path' => $newFileName, 'user' => $user));
 
             return true;
         }
@@ -122,6 +122,17 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         }
 
         return $image;
+    }
+
+    protected function deleteCache()
+    {
+        if ($this->getOptions()->getEnableCache()) {
+            $user = $this->getServiceLocator()->get('zfcuser_auth_service')->getIdentity();
+            $displayFilter = $this->getOptions()->getDisplayFilter();
+            if ($this->getCacheManager()->cacheExists($user, $displayFilter)) {
+                $this->getCacheManager()->deleteCache($user, $displayFilter);
+            }
+        }
     }
 
     /**
