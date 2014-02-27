@@ -1,5 +1,9 @@
 HtProfileImage
 ==============
+[![Master Branch Build Status](https://api.travis-ci.org/hrevert/HtProfileImage.png?branch=master)](http://travis-ci.org/hrevert/HtProfileImage)
+[![Latest Stable Version](https://poser.pugx.org/hrevert/ht-profile-image/v/stable.png)](https://packagist.org/packages/hrevert/ht-profile-image)
+[![Latest Unstable Version](https://poser.pugx.org/hrevert/ht-profile-image/v/unstable.png)](https://packagist.org/packages/hrevert/ht-profile-image)
+[![Total Downloads](https://poser.pugx.org/hrevert/ht-profile-image/downloads.png)](https://packagist.org/packages/hrevert/ht-profile-image
 
 A Zend framework 2 module which adds profile image upload functionality to ZfcUser
 
