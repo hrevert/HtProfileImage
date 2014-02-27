@@ -151,7 +151,7 @@ class ProfileImage extends Gravatar
      * @param  array    $attribs
      * @return self
      */
-    public function __invoke($user, $options = array(), $attribs = null)
+    public function __invoke($user, $attribs = null, $options = array())
     {
         $this->setOptions($options);
         if ($attribs !== null) {
