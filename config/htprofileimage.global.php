@@ -18,6 +18,7 @@ $settings = array(
      * Storage Filter
      *
      * Filter Alias for new uploading images
+     * If you do not know filters, please see https://github.com/hrevert/HtImgModule/blob/master/docs/Filters%2C%20Filter%20Loaders%20And%20Filter%20Aliases.md
      */
     //'storage_filter' => 'htprofileimage_store,
 
