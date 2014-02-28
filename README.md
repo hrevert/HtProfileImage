@@ -23,8 +23,6 @@ A Zend framework 2 module which adds profile image upload functionality to ZfcUs
 
 Please check this [wiki](https://github.com/hrevert/HtProfileImage/wiki) for more details on how to use this module.
 
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/hrevert/htprofileimage/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
+## TODO
+1. Ajax image upload
+2. Improve tests
