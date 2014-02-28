@@ -1,7 +1,8 @@
 {
     "name": "hrevert/ht-profile-image",
     "description": "A Zend framework module which adds profile image upload functionality to ZfcUser",
-    "type": "library",
+    "type": "module",
+    "license": "MIT",
     "keywords": [
         "zf2",
         "module",
