@@ -73,7 +73,7 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             }
             unlink($file);
             $this->deleteCache();
-            //$this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('image_path' => $newFileName, 'user' => $user));
+            $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('image_path' => $newFileName, 'user' => $user));
 
             return true;
         }
