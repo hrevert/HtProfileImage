@@ -26,6 +26,8 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 
     protected $enableCache = true;
 
+    protected $displayFilterList = ['htprofileimage_display'];
+
     public function setUploadDirectory($uploadDirectory)
     {
         $this->uploadDirectory = $uploadDirectory;
@@ -124,5 +126,15 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     public function getEnableCache()
     {
         return $this->enableCache;
+    }
+
+    public function setDisplayFilterList(array $displayFilterList)
+    {
+        $this->displayFilterList = $displayFilterList;
+    }
+
+    public function getDisplayFilterList()
+    {
+        return $this->displayFilterList;
     }
 }

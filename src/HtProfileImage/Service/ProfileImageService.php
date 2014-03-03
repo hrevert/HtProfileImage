@@ -43,7 +43,7 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
     public function storeImage(UserInterface $user, array $files)
     {
         $form = $this->getServiceLocator()->get('HtProfileImage\ProfileImageForm');
-        $this->getEventManager()->trigger(__METHOD__, $this, array(
+        $this->getEventManager()->trigger(__FUNCTION__, $this, array(
             'files' => $files,
             'form' => $form,
             'user' => $user
@@ -72,10 +72,8 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
                 $image->save($newFileName); // store the image
             }
             unlink($file);
-            $this->getEventManager()->getSharedManager()->attach(get_called_class(), __METHOD__.'.post', function($e){
-                $this->deleteCache();
-            });
-            $this->getEventManager()->trigger(__METHOD__.'.post', $this, array('image_path' => $newFileName, 'user' => $user));
+            $this->deleteCache();
+            //$this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('image_path' => $newFileName, 'user' => $user));
 
             return true;
         }
@@ -128,9 +126,10 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
     {
         if ($this->getOptions()->getEnableCache()) {
             $user = $this->getServiceLocator()->get('zfcuser_auth_service')->getIdentity();
-            $displayFilter = $this->getOptions()->getDisplayFilter();
-            if ($this->getCacheManager()->cacheExists($user, $displayFilter)) {
-                $this->getCacheManager()->deleteCache($user, $displayFilter);
+            foreach ($this->getOptions()->getDisplayFilterList() as $displayFilter) {
+                if ($this->getCacheManager()->cacheExists($user, $displayFilter)) {
+                    $this->getCacheManager()->deleteCache($user, $displayFilter);
+                }                
             }
         }
     }
