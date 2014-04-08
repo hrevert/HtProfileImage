@@ -44,7 +44,7 @@ interface CacheManagerInterface
     public function createCache(UserInterface $user, $filter, ImageInterface $image);
 
     /**
-     * Deletes a new of image of a user
+     * Deletes the image of a user
      *
      * @param  UserInterface $user
      * @param  string        $filter
