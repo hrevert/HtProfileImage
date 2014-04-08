@@ -15,7 +15,7 @@ A Zend framework 2 module which adds profile image upload functionality to ZfcUs
 * Useful view helpers to get user images from view templates
 
 ## Installation
-* Add `"hrevert/ht-profile-image": "1.0.*",` to your composer.json and run `php composer.phar update`
+* Add `"hrevert/ht-profile-image": "2.0.*",` to your composer.json and run `php composer.phar update`
 * Enable this module in `config/application.config.php`
 * Copy file located in `config/htprofileimage.global.php` to `./config/autoload/htprofileimage.global.php` and change the values as you wish
  
