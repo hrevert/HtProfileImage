@@ -9,7 +9,7 @@ use HtProfileImage\Model\StorageModelInterface;
 class CacheManager implements CacheManagerInterface
 {
     /**
-     * @var CacheManagerInterface
+     * @var HtImgCacheManagerInterface
      */
     protected $cacheManager;
 
