@@ -9,6 +9,7 @@ A Zend framework 2 module which adds profile image upload functionality to ZfcUs
 
 ## Requirement
 * [Zend Framework 2](https://github.com/zendframework/zf2)
+* [ZfcUser](https://github.com/ZF-Commons/ZfcUser)
 * [HtImgModule](https://github.com/hrevert/HtImgModule)
 
 ## Features
@@ -22,6 +23,7 @@ A Zend framework 2 module which adds profile image upload functionality to ZfcUs
 * Add `"hrevert/ht-profile-image": "2.0.*",` to your composer.json and run `php composer.phar update`
 * Enable this module as `HtProfileImage` and `HtImgModule` in `config/application.config.php`
 * Copy file located in `config/htprofileimage.global.php` to `./config/autoload/htprofileimage.global.php` and change the values as you wish
+* Import the SQL schema located in `./vendor/hrevert/ht-profile-image//data/schema.sql` if you use want to use different default images for different genders.
  
 Note: Also, checkout the options of `HtImgModule`.
  
