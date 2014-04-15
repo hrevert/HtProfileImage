@@ -7,6 +7,11 @@ HtProfileImage
 
 A Zend framework 2 module which adds profile image upload functionality to ZfcUser
 
+## Requirement
+* [Zend Framework 2](https://github.com/zendframework/zf2)
+* [HtImgModule](https://github.com/hrevert/HtImgModule)
+* [ZfcUser](https://github.com/ZF-Commons/ZfcUser)
+
 ## Features
 
 * Setting Gravatar as alternative when user has not uploaded his image
@@ -17,8 +22,10 @@ A Zend framework 2 module which adds profile image upload functionality to ZfcUs
 ## Installation
 * Add `"hrevert/ht-profile-image": "2.0.*",` to your composer.json and run `php composer.phar update`
 * Execute the sql commando in `data/mysql.sql`
-* Enable this module in `config/application.config.php`
+* Enable this module as `HtProfileImage` and `HtImgModule` in `config/application.config.php`
 * Copy file located in `config/htprofileimage.global.php` to `./config/autoload/htprofileimage.global.php` and change the values as you wish
+
+Note: Also, checkout the options of `HtImgModule`.
 
 ## How To
 
