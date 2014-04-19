@@ -2,7 +2,7 @@
 
 namespace HtProfileImage\View\Helper;
 
-use Zend\View\Helper\Gravatar;
+use Zend\View\Helper\AbstractHtmlElement;
 use ZfcUser\Mapper\UserInterface as UserMapperInterface;
 use ZfcUser\Entity\UserInterface;
 use HtProfileImage\Model\StorageModelInterface;
@@ -15,9 +15,8 @@ use HtProfileImage\Service\CacheManagerInterface;
  * It is a view helper and called from view tempates
  */
 
-class ProfileImage extends Gravatar
+class ProfileImage extends AbstractHtmlElement
 {
-
     /**
      * @var DisplayOptionsInterface
      */
@@ -47,6 +46,13 @@ class ProfileImage extends Gravatar
      * @var string
      */
     protected $filterAlias;
+
+    /**
+     * Attributes for HTML image tag
+     *
+     * @var array
+     */
+    protected $attribs;
 
     /**
      * Constructor
@@ -144,6 +150,24 @@ class ProfileImage extends Gravatar
     }
 
     /**
+     * Configure state
+     *
+     * @param  array $options
+     * @return self
+     */
+    public function setOptions(array $options)
+    {
+        foreach ($options as $key => $value) {
+            $method = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+            if (method_exists($this, $method)) {
+                $this->{$method}($value);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * gets image of a user
      *
      * @param  User|int $user    (instance of User or user_id)
@@ -164,18 +188,18 @@ class ProfileImage extends Gravatar
             $id = $user->getId();
             $this->setUser($user);
         } else {
-                throw new Exception\InvalidArgumentException(
-                    sprintf(
-                        '%s expects an instance of ZfcUser\Entity\UserInterface or integer(user_id) as 1st argument, %s provided instead',
-                        __METHOD__,
-                        is_object($user) ? get_class($user) : gettype($user)
-                    )
-                );
+            throw new Exception\InvalidArgumentException(
+                sprintf(
+                    '%s expects an instance of ZfcUser\Entity\UserInterface or integer(user_id) as 1st argument, %s provided instead',
+                    __METHOD__,
+                    is_object($user) ? get_class($user) : gettype($user)
+                )
+            );
         }
 
         if (!$this->getStorageModel()->userImageExists($user) && $this->displayOptions->getEnableGravatarAlternative()) {
-            $this->setEmail($user->getEmail());
-            $url = $this->getAvatarUrl();
+            $this->getView()->gravatar()->setEmail($user->getEmail());
+            $url = $this->getView()->gravatar()->getAvatarUrl();
         } else {
             $filterAlias = $this->getFilterAlias();
             if (
@@ -195,6 +219,16 @@ class ProfileImage extends Gravatar
     }
 
     /**
+     * Return valid image tag
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getImgTag();
+    }
+
+    /**
      * Return valid HTML image tag
      *
      * @return string
@@ -204,5 +238,27 @@ class ProfileImage extends Gravatar
         return '<img'
             . $this->htmlAttribs($this->getAttribs())
             . $this->getClosingBracket();
+    }
+
+    /**
+     * Set attribs for image tag
+     *
+     * @param  array $attribs
+     * @return self
+     */
+    public function setAttribs(array $attribs)
+    {
+        $this->attribs = $attribs;
+        return $this;
+    }
+
+    /**
+     * Get attribs of image
+     *
+     * @return array
+     */
+    public function getAttribs()
+    {
+        return $this->attribs;
     }
 }
