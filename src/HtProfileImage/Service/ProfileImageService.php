@@ -48,14 +48,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             'form' => $form,
             'user' => $user
         ));
-        $validator = new ProfileImageValidator();
+        $inputFilter = new ProfileImageInputFilter($this->getOptions()->getUploadDirectory(), $user);
+        $inputFilter->init();
+        $form->setInputFilter($inputFilter);
         $form->setData($files);
-        $form->setInputFilter($validator);
-        if ($form->isValid()) { // check if image is valid
-            $inputFilter = new ProfileImageInputFilter($this->getOptions()->getUploadDirectory(), $user);
-            $inputFilter->init();
-            $form->setInputFilter($inputFilter);
-            $result = $form->isValid();// upload the image
+        if ($form->isValid()) {
             $file = $inputFilter->getUploadTarget();
             $newFileName = $this->getStorageModel()->getUserImage($user);
             $filterAlias = $this->getOptions()->getStorageFilter();
