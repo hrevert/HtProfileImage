@@ -199,18 +199,18 @@ class ProfileImage extends AbstractHtmlElement
 
         if (!$this->getStorageModel()->userImageExists($user) && $this->displayOptions->getEnableGravatarAlternative()) {
             $this->getView()->gravatar()->setEmail($user->getEmail());
-            $url = $this->getView()->gravatar()->getAvatarUrl();
-        } else {
-            $filterAlias = $this->getFilterAlias();
-            if (
-                $this->cacheManager instanceof CacheManagerInterface &&
-                $this->cacheManager->cacheExists($user, $filterAlias)
-            ) {
-                $url = $this->getView()->basePath() . '/' . $this->cacheManager->getCacheUrl($user, $filterAlias);
-            } else {
-                $url = $this->getView()->url('zfcuser/htimagedisplay', ['id' => $user->getId()]);
-            }
+            return $this->getView()->gravatar();
         }
+        $filterAlias = $this->getFilterAlias();
+        if (
+            $this->cacheManager instanceof CacheManagerInterface &&
+            $this->cacheManager->cacheExists($user, $filterAlias)
+        ) {
+            $url = $this->getView()->basePath() . '/' . $this->cacheManager->getCacheUrl($user, $filterAlias);
+        } else {
+            $url = $this->getView()->url('zfcuser/htimagedisplay', ['id' => $user->getId()]);
+        }
+        
         $this->setAttribs(array(
             'src' => $url
         ));
