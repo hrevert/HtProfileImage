@@ -52,7 +52,7 @@ class ProfileImage extends AbstractHtmlElement
      *
      * @var array
      */
-    protected $attribs;
+    protected $attribs = [];
 
     /**
      * Constructor
@@ -173,7 +173,7 @@ class ProfileImage extends AbstractHtmlElement
      * @param  User|int $user    (instance of User or user_id)
      * @param  array    $options
      * @param  array    $attribs
-     * @return self
+     * @return self|\Zend\View\Helper\Gravatar
      */
     public function __invoke($user, $attribs = null, $options = array())
     {
@@ -199,6 +199,7 @@ class ProfileImage extends AbstractHtmlElement
 
         if (!$this->getStorageModel()->userImageExists($user) && $this->displayOptions->getEnableGravatarAlternative()) {
             $this->getView()->gravatar()->setEmail($user->getEmail());
+            $this->getView()->gravatar()->setAttribs($this->getAttribs());
             return $this->getView()->gravatar();
         }
         $filterAlias = $this->getFilterAlias();
