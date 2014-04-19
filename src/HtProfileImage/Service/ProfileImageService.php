@@ -7,6 +7,7 @@ use HtProfileImage\Form\ProfileImageInputFilter;
 use HtProfileImage\Form\ProfileImageValidator;
 use ZfcBase\EventManager\EventProvider;
 use HtProfileImage\Entity\UserInterface as UserGender;
+use Zend\Filter\File\RenameUpload;
 
 class ProfileImageService extends EventProvider implements ProfileImageServiceInterface
 {
@@ -53,14 +54,17 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         $form->setInputFilter($inputFilter);
         $form->setData($files);
         if ($form->isValid()) {
-            $file = $inputFilter->getUploadTarget();
+            $uploadTarget = $inputFilter->getUploadTarget();
+            $filter = new RenameUpload($uploadTarget);
+            $filter->setOverwrite(true);
+            $filter->filter($files['image']);
             $newFileName = $this->getStorageModel()->getUserImage($user);
             $filterAlias = $this->getOptions()->getStorageFilter();
             if (!$filterAlias) {
-                rename($file, $newFileName); //no filter alias given, just rename
+                rename($uploadTarget, $newFileName); //no filter alias given, just rename
             } else {
                 $filter = $this->getFilterManager()->getFilter($filterAlias);
-                $image = $this->getImagine()->open($file);
+                $image = $this->getImagine()->open($uploadTarget);
                 try {
                     $image = $filter->apply($image); // resize the image
                 } catch (\Exception $e) {
@@ -68,7 +72,7 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
                 }
                 $image->save($newFileName); // store the image
             }
-            unlink($file);
+            unlink($uploadTarget);
             $this->deleteCache();
             $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('image_path' => $newFileName, 'user' => $user));
 
