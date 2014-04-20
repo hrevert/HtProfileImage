@@ -28,6 +28,8 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 
     protected $displayFilterList = ['htprofileimage_display'];
 
+    protected $maxImageFileSize = '10MB';
+
     public function setUploadDirectory($uploadDirectory)
     {
         $this->uploadDirectory = $uploadDirectory;
@@ -136,5 +138,15 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     public function getDisplayFilterList()
     {
         return $this->displayFilterList;
+    }
+
+    public function setMaxImageFileSize($maxImageFileSize)
+    {
+        $this->maxImageFileSize = $maxImageFileSize;
+    }
+
+    public function getMaxImageFileSize()
+    {
+        return $this->maxImageFileSize;
     }
 }

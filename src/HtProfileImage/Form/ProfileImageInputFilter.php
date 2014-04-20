@@ -13,10 +13,13 @@ class ProfileImageInputFilter extends ProvidesEventsInputFilter
 
     protected $user;
 
-    public function __construct($uploadDir, UserInterface $user)
+    protected $maxImageFileSize;
+
+    public function __construct($uploadDir, UserInterface $user, $maxImageFileSize)
     {
         $this->uploadDir = $uploadDir;
         $this->user = $user;
+        $this->maxImageFileSize = $maxImageFileSize;
     }
 
     public function getUploadTarget()
@@ -50,6 +53,12 @@ class ProfileImageInputFilter extends ProvidesEventsInputFilter
                 ],
                 [
                     'name' => 'File\UploadFile',
+                ],
+                [
+                    'name'      => 'File\Size',
+                    'options'   => [
+                        'max' => $this->maxImageFileSize,
+                    ]
                 ],
                 [
                     'name' => 'NotEmpty',

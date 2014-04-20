@@ -49,7 +49,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             'form' => $form,
             'user' => $user
         ]);
-        $inputFilter = new ProfileImageInputFilter($this->getOptions()->getUploadDirectory(), $user);
+        $inputFilter = new ProfileImageInputFilter(
+            $this->getOptions()->getUploadDirectory(), 
+            $user, 
+            $this->getOptions()->getMaxImageFileSize()
+        );
         $inputFilter->init();
         $form->setInputFilter($inputFilter);
         $form->setData($files);

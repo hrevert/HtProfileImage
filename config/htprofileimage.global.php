@@ -100,6 +100,17 @@ $settings = [
      * Accepted Values: bool
      */
     // 'enable_cache' => true,
+
+    /**
+     * Maximum file size of uploaded image
+     *
+     * File size can be an integer or a byte string
+     * This includes 'B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'
+     * For example: 2000, 2MB, 0.2GB
+     *
+     * Default: 10MB
+     */
+    // 'max_image_file_size' => '10MB',
 ];
 
 /**
