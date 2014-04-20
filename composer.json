@@ -34,8 +34,8 @@
         "ext-fileinfo": "*"
     },
     "autoload": {
-        "psr-0": {
-            "HtProfileImage": "src/"
+        "psr-4": {
+            "HtProfileImage\\": "src/"
         },
         "classmap": [
             "./Module.php"
