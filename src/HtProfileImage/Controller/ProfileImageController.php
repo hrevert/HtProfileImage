@@ -52,29 +52,29 @@ class ProfileImageController extends AbstractActionController
         if ($request->isPost()) {
             if ($this->profileImageService->storeImage($user, $request->getFiles()->toArray())) {
                 if ($request->isXmlHttpRequest()) {
-                    return new Model\JsonModel(array(
+                    return new Model\JsonModel([
                         'uploaded' => true
-                    ));
+                    ]);
                 } elseif ($options->getPostUploadRoute()) {
-                        return call_user_func_array(array($this->redirect(), 'toRoute'), (array) $options->getPostUploadRoute());
+                        return call_user_func_array([$this->redirect(), 'toRoute'], (array) $options->getPostUploadRoute());
                 }
                 $imageUploaded = true;
             } else {
                 if ($request->isXmlHttpRequest()) {
-                    return new Model\JsonModel(array(
+                    return new Model\JsonModel([
                         'error' => true,
                         'messages' => $form->getMessages()
-                    ));
+                    ]);
                 }
 
             }
         }
 
-        return new Model\ViewModel(array(
+        return new Model\ViewModel([
             'form' => $form,
             'imageUploaded' => $imageUploaded,
             'user' => $user
-        ));
+        ]);
     }
 
     /**

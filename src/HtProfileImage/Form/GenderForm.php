@@ -10,16 +10,16 @@ class GenderForm extends Form
     public function __construct()
     {
         parent::__construct();
-        $this->add(array(
+        $this->add([
             'name' => 'gender',
             'type' => 'Select',
-            'options' => array(
+            'options' => [
                 'label' => 'Gender',
-                'value_options' => array(
+                'value_options' => [
                      User::GENDER_MALE => "Male",
                      User::GENDER_FEMALE => "Female",
-                )
-            )
-        ));
+                ]
+            ]
+        ]);
     }
 }

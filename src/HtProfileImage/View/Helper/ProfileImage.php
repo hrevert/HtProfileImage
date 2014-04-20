@@ -175,7 +175,7 @@ class ProfileImage extends AbstractHtmlElement
      * @param  array    $attribs
      * @return self|\Zend\View\Helper\Gravatar
      */
-    public function __invoke($user, $attribs = null, $options = array())
+    public function __invoke($user, $attribs = null, $options = [])
     {
         $this->setOptions($options);
         if ($attribs !== null) {
@@ -212,9 +212,9 @@ class ProfileImage extends AbstractHtmlElement
             $url = $this->getView()->url('zfcuser/htimagedisplay', ['id' => $user->getId()]);
         }
         
-        $this->setAttribs(array(
+        $this->setAttribs([
             'src' => $url
-        ));
+        ]);
 
         return $this;
     }

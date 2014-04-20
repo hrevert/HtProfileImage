@@ -17,6 +17,6 @@ class ModuleOptionsFactory implements FactoryInterface
     {
         $config = $sm->get('Config');
 
-        return new ModuleOptions(isset($config['htprofileimage']) ? $config['htprofileimage'] : array());
+        return new ModuleOptions(isset($config['htprofileimage']) ? $config['htprofileimage'] : []);
     }
 }

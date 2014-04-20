@@ -13,7 +13,6 @@ return array(
   'HtProfileImage\Form\GenderForm'                                  => __DIR__ . '/src/HtProfileImage/Form/GenderForm.php',
   'HtProfileImage\Form\ProfileImageForm'                            => __DIR__ . '/src/HtProfileImage/Form/ProfileImageForm.php',
   'HtProfileImage\Form\ProfileImageInputFilter'                     => __DIR__ . '/src/HtProfileImage/Form/ProfileImageInputFilter.php',
-  'HtProfileImage\Form\ProfileImageValidator'                       => __DIR__ . '/src/HtProfileImage/Form/ProfileImageValidator.php',
   'HtProfileImage\Model\StorageModel'                               => __DIR__ . '/src/HtProfileImage/Model/StorageModel.php',
   'HtProfileImage\Model\StorageModelInterface'                      => __DIR__ . '/src/HtProfileImage/Model/StorageModelInterface.php',
   'HtProfileImage\Module'                                           => __DIR__ . '/src/HtProfileImage/Module.php',

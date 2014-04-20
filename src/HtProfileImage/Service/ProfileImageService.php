@@ -44,12 +44,16 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
     public function storeImage(UserInterface $user, array $files)
     {
         $form = $this->getServiceLocator()->get('HtProfileImage\ProfileImageForm');
-        $this->getEventManager()->trigger(__FUNCTION__, $this, array(
+        $this->getEventManager()->trigger(__FUNCTION__, $this, [
             'files' => $files,
             'form' => $form,
             'user' => $user
-        ));
-        $inputFilter = new ProfileImageInputFilter($this->getOptions()->getUploadDirectory(), $user);
+        ]);
+        $inputFilter = new ProfileImageInputFilter(
+            $this->getOptions()->getUploadDirectory(), 
+            $user, 
+            $this->getOptions()->getMaxImageFileSize()
+        );
         $inputFilter->init();
         $form->setInputFilter($inputFilter);
         $form->setData($files);
@@ -73,8 +77,8 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
                 $image->save($newFileName); // store the image
             }
             unlink($uploadTarget);
-            $this->deleteCache();
-            $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('image_path' => $newFileName, 'user' => $user));
+            $this->deleteCache($user);
+            $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, ['image_path' => $newFileName, 'user' => $user]);
 
             return true;
         }
@@ -119,14 +123,18 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
                 $image
             );
         }
+        $this->getEventManager()->trigger(
+            __FUNCTION__, 
+            $this, 
+            ['user' => $user, 'image' => $image, 'fileName' => $fileName, 'filterAlias' => $filterAlias]
+        );
 
         return $image;
     }
 
-    protected function deleteCache()
+    protected function deleteCache(UserInterface $user)
     {
         if ($this->getOptions()->getEnableCache()) {
-            $user = $this->getServiceLocator()->get('zfcuser_auth_service')->getIdentity();
             foreach ($this->getOptions()->getDisplayFilterList() as $displayFilter) {
                 if ($this->getCacheManager()->cacheExists($user, $displayFilter)) {
                     $this->getCacheManager()->deleteCache($user, $displayFilter);

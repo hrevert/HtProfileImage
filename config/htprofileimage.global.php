@@ -5,7 +5,7 @@
  * If you have a ./config/autoload/ directory set up for your project, you can
  * drop this config file in it and change the values as you wish.
  */
-$settings = array(
+$settings = [
     /**
      * Upload Directory
      *
@@ -100,14 +100,25 @@ $settings = array(
      * Accepted Values: bool
      */
     // 'enable_cache' => true,
-);
+
+    /**
+     * Maximum file size of uploaded image
+     *
+     * File size can be an integer or a byte string
+     * This includes 'B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'
+     * For example: 2000, 2MB, 0.2GB
+     *
+     * Default: 10MB
+     */
+    // 'max_image_file_size' => '10MB',
+];
 
 /**
  * You do not need to edit below this line
  */
-return array(
+return [
     'htprofileimage' => $settings,
-    'zfcuser' => array(
+    'zfcuser' => [
         'user_entity_class' => (isset($settings['enable_gender']) && $settings['enable_gender'] == true) ? "HtProfileImage\Entity\User" : "ZfcUser\Entity\User",
-    )
-);
+    ]
+];
