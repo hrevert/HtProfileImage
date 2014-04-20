@@ -10,4 +10,8 @@ interface ModuleOptionsInterface extends
     public function setPostUploadRoute($postUploadRoute);
 
     public function getPostUploadRoute();
+
+    public function setMaxImageFileSize($maxImageFileSize);
+
+    public function getMaxImageFileSize();
 }
