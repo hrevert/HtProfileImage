@@ -29,7 +29,7 @@ Note: Also, checkout the options of `HtImgModule`.
  
 ## How To
 
-Please check this [wiki](https://github.com/hrevert/HtProfileImage/wiki) for more details on how to use this module.
+Please check this [/docs](/docs) folder for more details on how to use this module.
 
 ## TODO
 1. Ajax image upload
