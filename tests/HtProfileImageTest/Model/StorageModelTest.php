@@ -20,6 +20,6 @@ class StorageModelTest extends \PHPUnit_Framework_Testcase
         $storageModel = new StorageModel($options);
         $user = new User;
         $user->setId(4);
-        $this->assertEquals('upload_directory/4.png', $storageModel->getUserImage($user));     
+        $this->assertEquals('upload_directory/4.png', $storageModel->getUserImage($user));
     }
 }

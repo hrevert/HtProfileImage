@@ -44,7 +44,7 @@ class ProfileImageController extends AbstractActionController
         if (!$authenticationService->hasIdentity()) {
             return $this->redirect()->toRoute('zfcuser');
         }
-        $user = $authenticationService->getIdentity(); 
+        $user = $authenticationService->getIdentity();
 
         $userId = $this->params()->fromRoute('userId', null);
         if ($userId !== null) {
@@ -52,10 +52,10 @@ class ProfileImageController extends AbstractActionController
             $user = $this->getUserMapper()->findById($userId);
             if (!$user) {
                 return $this->notFoundAction();
-            }             
+            }
             if (!$this->getOptions()->getEnableInterUserImageUpload() && ($user->getId() !== $currentUser->getId())) {
                 return $this->notFoundAction();
-            }           
+            }
         }
 
         $options = $this->getOptions();

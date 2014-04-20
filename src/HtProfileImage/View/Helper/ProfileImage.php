@@ -170,9 +170,9 @@ class ProfileImage extends AbstractHtmlElement
     /**
      * gets image of a user
      *
-     * @param  User|int $user    (instance of User or user_id)
-     * @param  array    $options
-     * @param  array    $attribs
+     * @param  User|int                        $user    (instance of User or user_id)
+     * @param  array                           $options
+     * @param  array                           $attribs
      * @return self|\Zend\View\Helper\Gravatar
      */
     public function __invoke($user, $attribs = null, $options = [])
@@ -197,11 +197,12 @@ class ProfileImage extends AbstractHtmlElement
             );
         }
 
-        if (!$this->getStorageModel()->userImageExists($user) && 
+        if (!$this->getStorageModel()->userImageExists($user) &&
             $this->displayOptions->getEnableGravatarAlternative()
         ) {
             $this->getView()->gravatar()->setEmail($user->getEmail());
             $this->getView()->gravatar()->setAttribs($this->getAttribs());
+
             return $this->getView()->gravatar();
         }
         $filterAlias = $this->getFilterAlias();
@@ -213,7 +214,7 @@ class ProfileImage extends AbstractHtmlElement
         } else {
             $url = $this->getView()->url('zfcuser/htimagedisplay', ['id' => $user->getId()]);
         }
-        
+
         $this->setAttribs([
             'src' => $url
         ]);
@@ -252,6 +253,7 @@ class ProfileImage extends AbstractHtmlElement
     public function setAttribs(array $attribs)
     {
         $this->attribs = $attribs;
+
         return $this;
     }
 

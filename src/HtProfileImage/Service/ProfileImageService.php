@@ -4,7 +4,6 @@ namespace HtProfileImage\Service;
 use ZfcUser\Entity\UserInterface;
 use HtProfileImage\Form\ProfileImageForm;
 use HtProfileImage\Form\ProfileImageInputFilter;
-use HtProfileImage\Form\ProfileImageValidator;
 use ZfcBase\EventManager\EventProvider;
 use HtProfileImage\Entity\UserGenderInterface;
 use Zend\Filter\File\RenameUpload;
@@ -51,8 +50,8 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             'user' => $user
         ]);
         $inputFilter = new ProfileImageInputFilter(
-            $this->getOptions()->getUploadDirectory(), 
-            $user, 
+            $this->getOptions()->getUploadDirectory(),
+            $user,
             $this->getOptions()->getMaxImageFileSize()
         );
         $inputFilter->init();
@@ -128,8 +127,8 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             );
         }
         $this->getEventManager()->trigger(
-            __FUNCTION__, 
-            $this, 
+            __FUNCTION__,
+            $this,
             ['user' => $user, 'image' => $image, 'fileName' => $fileName, 'filterAlias' => $filterAlias]
         );
 
@@ -142,7 +141,7 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             foreach ($this->getOptions()->getDisplayFilterList() as $displayFilter) {
                 if ($this->getCacheManager()->cacheExists($user, $displayFilter)) {
                     $this->getCacheManager()->deleteCache($user, $displayFilter);
-                }                
+                }
             }
         }
     }
