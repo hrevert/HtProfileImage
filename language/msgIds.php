@@ -6,3 +6,4 @@
 translate('Username');
 translate('Gender');
 translate('Upload');
+translate('No file selected.');

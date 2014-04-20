@@ -11,7 +11,7 @@ $form->prepare();
 <?php endif; ?>
 <?php if ($user->getId() == $this->zfcUserIdentity()->getId()): ?>
     <a href="<?php echo $this->url('zfcuser'); ?>" class="btn btn-default">
-        Back to my Profile
+        <?php echo $this->translate('Back to my Profile'); ?>
     </a>
     <br/><br/>
 <?php endif; ?>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZfcUser\n"
 "Report-Msgid-Bugs-To: zf-devteam@zend.com\n"
-"POT-Creation-Date: 2014-04-20 20:28+0100\n"
-"PO-Revision-Date: 2014-04-20 20:29+0100\n"
+"POT-Creation-Date: 2014-04-20 21:58+0100\n"
+"PO-Revision-Date: 2014-04-20 21:58+0100\n"
 "Last-Translator: Stijnhau <stijnhau@gmail.com>\n"
 "Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
 "Language: nl_NL\n"
@@ -24,6 +24,14 @@ msgstr "Gebruikersnaam"
 msgid "Gender"
 msgstr "Geslacht"
 
+#: language/msgIds.php:8
+msgid "Upload"
+msgstr "Laad op"
+
+#: language/msgIds.php:9
+msgid "No file selected."
+msgstr "Geen bestand aangeduid."
+
 #: view/ht-profile-image/profile-image/upload.phtml:3
 msgid "Image Upload - "
 msgstr "Afbeelding oplaaden - "
@@ -31,6 +39,10 @@ msgstr "Afbeelding oplaaden - "
 #: view/ht-profile-image/profile-image/upload.phtml:10
 msgid "Image Successfully Uploaded"
 msgstr "Afbeelding succesvool opgeladen"
+
+#: view/ht-profile-image/profile-image/upload.phtml:14
+msgid "Back to my Profile"
+msgstr "Terug naar Profiel"
 
 #: view/zfc-user/user/index.phtml:2
 msgid "Hello"
