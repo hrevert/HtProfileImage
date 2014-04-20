@@ -39,6 +39,8 @@ $settings = [
      * Whether or not to set gender-wise default image
      * When gravatar is disabled and user has not uploaded his image
      *
+     * Make sure the user entity implements, HtProfileImage\Entity\UserGenderInterface
+     *
      * Default value: false
      * Accepted values: boolean true or false
      */
