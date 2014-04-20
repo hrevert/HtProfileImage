@@ -77,7 +77,7 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
                 $image->save($newFileName); // store the image
             }
             unlink($uploadTarget);
-            $this->deleteCache();
+            $this->deleteCache($user);
             $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, ['image_path' => $newFileName, 'user' => $user]);
 
             return true;
@@ -127,10 +127,9 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         return $image;
     }
 
-    protected function deleteCache()
+    protected function deleteCache(UserInterface $user)
     {
         if ($this->getOptions()->getEnableCache()) {
-            $user = $this->getServiceLocator()->get('zfcuser_auth_service')->getIdentity();
             foreach ($this->getOptions()->getDisplayFilterList() as $displayFilter) {
                 if ($this->getCacheManager()->cacheExists($user, $displayFilter)) {
                     $this->getCacheManager()->deleteCache($user, $displayFilter);
