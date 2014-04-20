@@ -44,11 +44,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
     public function storeImage(UserInterface $user, array $files)
     {
         $form = $this->getServiceLocator()->get('HtProfileImage\ProfileImageForm');
-        $this->getEventManager()->trigger(__FUNCTION__, $this, array(
+        $this->getEventManager()->trigger(__FUNCTION__, $this, [
             'files' => $files,
             'form' => $form,
             'user' => $user
-        ));
+        ]);
         $inputFilter = new ProfileImageInputFilter($this->getOptions()->getUploadDirectory(), $user);
         $inputFilter->init();
         $form->setInputFilter($inputFilter);
@@ -74,7 +74,7 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             }
             unlink($uploadTarget);
             $this->deleteCache();
-            $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, array('image_path' => $newFileName, 'user' => $user));
+            $this->getEventManager()->trigger(__FUNCTION__.'.post', $this, ['image_path' => $newFileName, 'user' => $user]);
 
             return true;
         }

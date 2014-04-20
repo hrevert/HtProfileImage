@@ -26,41 +26,41 @@ class ProfileImageInputFilter extends ProvidesEventsInputFilter
 
     public function init()
     {
-        $this->add(array(
+        $this->add([
             'name' => 'image',
             'required' => true,
-            'filters' => array(
-                array(
+            'filters' => [
+                [
                     'name' => 'File\RenameUpload',
-                    'options' => array(
+                    'options' => [
                         'target' => $this->getUploadTarget(),
                         'overwrite' => true,
-                    )
-                )
-            ),
-            'validators' => array(
-                array(
+                    ]
+                ]
+            ],
+            'validators' => [
+                [
                     'name' => 'File\MimeType',
-                    'options' => array(
-                        'mimeType' => array('image/jpeg', 'image/jpg', 'image/png', 'image/gif'),
-                        'messages' => array(
+                    'options' => [
+                        'mimeType' => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
+                        'messages' => [
                             MimeType::FALSE_TYPE => "Incorrect file type. Only jpeg, jpg, png and gif file types are allowed"
-                        )
-                    )
-                ),
-                array(
+                        ]
+                    ]
+                ],
+                [
                     'name' => 'File\UploadFile',
-                ),
-                array(
+                ],
+                [
                     'name' => 'NotEmpty',
-                    'options' => array(
-                        'messages' => array(
+                    'options' => [
+                        'messages' => [
                             NotEmpty::IS_EMPTY => 'Please enter a image!'
-                        )
-                    )
-                )
-            )
-        ));
+                        ]
+                    ]
+                ]
+            ]
+        ]);
         $this->getEventManager()->trigger("init", $this);
     }
 }

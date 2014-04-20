@@ -12,19 +12,19 @@ class ProfileImageForm extends ProvidesEventsForm
         parent::__construct('profile_image_upload');
         $this->setAttribute('class', 'image_upload_form');
         $this->setAttribute('enctype', 'multipart/form-data');
-        $this->add(array(
+        $this->add([
             'name' => 'image',
             'type' => 'File',
-        ));
+        ]);
 
-        $this->add(array(
+        $this->add([
             'name' => 'submit',
             'type'  => 'Submit',
-            'attributes' => array(
+            'attributes' => [
                 'value' => 'Upload',
                 'class' => 'btn btn-lg btn-success'
-            ),
-        ));
+            ],
+        ]);
 
         $this->getEventManager()->trigger('init', $this);
     }
