@@ -18,6 +18,6 @@ class UserTest extends \PHPUnit_Framework_Testcase
     {
         $user = new User();
         $this->setExpectedException('HtProfileImage\Exception\InvalidArgumentException');
-        $user->setGender('234234');        
+        $user->setGender('234234');
     }
 }

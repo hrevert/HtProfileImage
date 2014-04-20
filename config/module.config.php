@@ -13,7 +13,7 @@ return [
                     'htimageupload' => [
                         'type' => 'Segment',
                         'options' => [
-                            'route' => '/upload-image',
+                            'route' => '/upload-image[/:userId]',
                             'defaults' => [
                                 'controller' => 'HtProfileImage\ProfileImage',
                                 'action' => 'upload'

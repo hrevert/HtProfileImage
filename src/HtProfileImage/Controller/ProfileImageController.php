@@ -45,6 +45,19 @@ class ProfileImageController extends AbstractActionController
             return $this->redirect()->toRoute('zfcuser');
         }
         $user = $authenticationService->getIdentity();
+
+        $userId = $this->params()->fromRoute('userId', null);
+        if ($userId !== null) {
+            $currentUser = $user;
+            $user = $this->getUserMapper()->findById($userId);
+            if (!$user) {
+                return $this->notFoundAction();
+            }
+            if (!$this->getOptions()->getEnableInterUserImageUpload() && ($user->getId() !== $currentUser->getId())) {
+                return $this->notFoundAction();
+            }
+        }
+
         $options = $this->getOptions();
         $form = $this->getServiceLocator()->get('HtProfileImage\ProfileImageForm');
         $request = $this->getRequest();

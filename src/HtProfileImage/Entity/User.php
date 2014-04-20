@@ -3,7 +3,7 @@ namespace HtProfileImage\Entity;
 
 use HtProfileImage\Exception;
 
-class User extends \ZfcUser\Entity\User
+class User extends \ZfcUser\Entity\User implements UserGenderInterface
 {
     const GENDER_MALE = 1;
 
@@ -12,7 +12,7 @@ class User extends \ZfcUser\Entity\User
     /**
      * @var int
      */
-    protected $gender = self::GENDER_MALE;
+    protected $gender;
 
     /**
      * Sets gender
