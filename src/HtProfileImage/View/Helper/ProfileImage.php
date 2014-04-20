@@ -197,7 +197,9 @@ class ProfileImage extends AbstractHtmlElement
             );
         }
 
-        if (!$this->getStorageModel()->userImageExists($user) && $this->displayOptions->getEnableGravatarAlternative()) {
+        if (!$this->getStorageModel()->userImageExists($user) && 
+            $this->displayOptions->getEnableGravatarAlternative()
+        ) {
             $this->getView()->gravatar()->setEmail($user->getEmail());
             $this->getView()->gravatar()->setAttribs($this->getAttribs());
             return $this->getView()->gravatar();
