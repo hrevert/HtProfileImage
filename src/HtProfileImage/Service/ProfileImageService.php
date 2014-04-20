@@ -123,6 +123,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
                 $image
             );
         }
+        $this->getEventManager()->trigger(
+            __FUNCTION__, 
+            $this, 
+            ['user' => $user, 'image' => $image, 'fileName' => $fileName, 'filterAlias' => $filterAlias]
+        );
 
         return $image;
     }
