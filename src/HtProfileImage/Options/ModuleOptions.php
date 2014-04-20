@@ -30,6 +30,8 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 
     protected $maxImageFileSize = '10MB';
 
+    protected $enableInterUserImageUpload = false;
+
     public function setUploadDirectory($uploadDirectory)
     {
         $this->uploadDirectory = $uploadDirectory;
@@ -148,5 +150,15 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     public function getMaxImageFileSize()
     {
         return $this->maxImageFileSize;
+    }
+
+    public function setEnableInterUserImageUpload($enableInterUserImageUpload)
+    {
+        $this->enableInterUserImageUpload = (bool) $enableInterUserImageUpload;
+    }
+
+    public function getEnableInterUserImageUpload()
+    {
+        return $this->enableInterUserImageUpload;
     }
 }

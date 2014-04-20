@@ -14,4 +14,8 @@ interface ModuleOptionsInterface extends
     public function setMaxImageFileSize($maxImageFileSize);
 
     public function getMaxImageFileSize();
+
+    public function setEnableInterUserImageUpload($enableInterUserImageUpload);
+
+    public function getEnableInterUserImageUpload();
 }

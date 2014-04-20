@@ -39,6 +39,8 @@ $settings = [
      * Whether or not to set gender-wise default image
      * When gravatar is disabled and user has not uploaded his image
      *
+     * Make sure the user entity implements, HtProfileImage\Entity\UserGenderInterface
+     *
      * Default value: false
      * Accepted values: boolean true or false
      */
@@ -111,6 +113,14 @@ $settings = [
      * Default: 10MB
      */
     // 'max_image_file_size' => '10MB',
+
+    /**
+     * Enable One User to Upload other user`s image?
+     * If enabled, you can upload a user`image from http://your-app/user/upload-image/[:userId]
+     *
+     * Default: false
+     */
+    //'enable_inter_user_image_upload' => false,
 ];
 
 /**

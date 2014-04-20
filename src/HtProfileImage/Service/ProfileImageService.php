@@ -4,10 +4,10 @@ namespace HtProfileImage\Service;
 use ZfcUser\Entity\UserInterface;
 use HtProfileImage\Form\ProfileImageForm;
 use HtProfileImage\Form\ProfileImageInputFilter;
-use HtProfileImage\Form\ProfileImageValidator;
 use ZfcBase\EventManager\EventProvider;
-use HtProfileImage\Entity\UserInterface as UserGender;
+use HtProfileImage\Entity\UserGenderInterface;
 use Zend\Filter\File\RenameUpload;
+use HtProfileImage\Exception;
 
 class ProfileImageService extends EventProvider implements ProfileImageServiceInterface
 {
@@ -50,8 +50,8 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             'user' => $user
         ]);
         $inputFilter = new ProfileImageInputFilter(
-            $this->getOptions()->getUploadDirectory(), 
-            $user, 
+            $this->getOptions()->getUploadDirectory(),
+            $user,
             $this->getOptions()->getMaxImageFileSize()
         );
         $inputFilter->init();
@@ -95,8 +95,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             $fileName = $this->getStorageModel()->getUserImage($user);
         } else {
             if ($this->getOptions()->getEnableGender()) {
+                if (!$user instanceof UserGenderInterface) {
+                     throw new Exception\InvalidArgumentException('User entity class must implement HtProfileImage\Entity\UserGenderInterface.');
+                }
                 switch ($user->getGender()) {
-                    case UserGender::GENDER_FEMALE:
+                    case $user::GENDER_FEMALE:
                         $fileName = $this->getOptions()->getFemaleImage();
                         break;
                     default:
@@ -124,8 +127,8 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             );
         }
         $this->getEventManager()->trigger(
-            __FUNCTION__, 
-            $this, 
+            __FUNCTION__,
+            $this,
             ['user' => $user, 'image' => $image, 'fileName' => $fileName, 'filterAlias' => $filterAlias]
         );
 
@@ -138,7 +141,7 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             foreach ($this->getOptions()->getDisplayFilterList() as $displayFilter) {
                 if ($this->getCacheManager()->cacheExists($user, $displayFilter)) {
                     $this->getCacheManager()->deleteCache($user, $displayFilter);
-                }                
+                }
             }
         }
     }
