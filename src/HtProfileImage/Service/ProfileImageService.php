@@ -6,8 +6,9 @@ use HtProfileImage\Form\ProfileImageForm;
 use HtProfileImage\Form\ProfileImageInputFilter;
 use HtProfileImage\Form\ProfileImageValidator;
 use ZfcBase\EventManager\EventProvider;
-use HtProfileImage\Entity\UserInterface as UserGender;
+use HtProfileImage\Entity\UserGenderInterface;
 use Zend\Filter\File\RenameUpload;
+use HtProfileImage\Exception;
 
 class ProfileImageService extends EventProvider implements ProfileImageServiceInterface
 {
@@ -95,8 +96,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             $fileName = $this->getStorageModel()->getUserImage($user);
         } else {
             if ($this->getOptions()->getEnableGender()) {
+                if (!$user instanceof UserGenderInterface) {
+                     throw new Exception\InvalidArgumentException('User entity class must implement HtProfileImage\Entity\UserGenderInterface.');
+                }
                 switch ($user->getGender()) {
-                    case UserGender::GENDER_FEMALE:
+                    case $user::GENDER_FEMALE:
                         $fileName = $this->getOptions()->getFemaleImage();
                         break;
                     default:
