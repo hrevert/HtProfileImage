@@ -1,0 +1,118 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZfcUser\n"
+"Report-Msgid-Bugs-To: zf-devteam@zend.com\n"
+"POT-Creation-Date: 2014-04-20 20:29+0100\n"
+"PO-Revision-Date: 2014-04-20 20:29+0100\n"
+"Last-Translator: Stijnhau <stijnhau@gmail.com>\n"
+"Language-Team: ZF Contibutors <zf-devteam@zend.com>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-KeywordsList: translate\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: language/msgIds.php:6
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: language/msgIds.php:7
+msgid "Gender"
+msgstr ""
+
+#: view/ht-profile-image/profile-image/upload.phtml:3
+msgid "Image Upload - "
+msgstr ""
+
+#: view/ht-profile-image/profile-image/upload.phtml:10
+msgid "Image Successfully Uploaded"
+msgstr ""
+
+#: view/zfc-user/user/index.phtml:2
+msgid "Hello"
+msgstr "Witaj"
+
+#: view/zfc-user/user/index.phtml:3
+msgid "Sign Out"
+msgstr "Wyloguj"
+
+#: view/zfc-user/user/index.phtml:5
+msgid "Upload image"
+msgstr ""
+
+#~ msgid "Email"
+#~ msgstr "E-mail"
+
+#~ msgid "New Email"
+#~ msgstr "Nowy e-mail"
+
+#~ msgid "Verify New Email"
+#~ msgstr "Powtórz nowy e-mail"
+
+#~ msgid "Display Name"
+#~ msgstr "Nazwa wyświetlana"
+
+#~ msgid "Password"
+#~ msgstr "Hasło"
+
+#~ msgid "Password Verify"
+#~ msgstr "Powtórz hasło"
+
+#~ msgid "Current Password"
+#~ msgstr "Aktualne hasło"
+
+#~ msgid "Verify New Password"
+#~ msgstr "Powtórz nowe hasło"
+
+#~ msgid "New Password"
+#~ msgstr "Nowe hasło"
+
+#~ msgid "Please type the following text"
+#~ msgstr "Proszę przepisz następujący tekst"
+
+#~ msgid "Submit"
+#~ msgstr "Prześlij"
+
+#~ msgid "Sign In"
+#~ msgstr "Logowanie"
+
+#~ msgid "Register"
+#~ msgstr "Rejestracja"
+
+#~ msgid "No record matching the input was found"
+#~ msgstr "Nie znaleziono konta o podanym identyfikatorze"
+
+#~ msgid "A record matching the input was found"
+#~ msgstr "Konto o podanym identyfikatorze już istnieje"
+
+#~ msgid "Authentication failed. Please try again."
+#~ msgstr "Logowanie nie powiodło się. Proszę spróbuj ponownie."
+
+#~ msgid "Change Email for %s"
+#~ msgstr "Zmień e-mail dla %s"
+
+#~ msgid "Email address changed successfully."
+#~ msgstr "Pomyślnie zaktualizowano e-mail."
+
+#~ msgid "Unable to update your email address. Please try again."
+#~ msgstr ""
+#~ "Nie udało się zaktualizować Twojego adresu e-mail. Proszę spróbuj "
+#~ "ponownie."
+
+#~ msgid "Change Password for %s"
+#~ msgstr "Zmień hasło dla %s"
+
+#~ msgid "Password changed successfully."
+#~ msgstr "Pomyślnie zmieniono hasło."
+
+#~ msgid "Unable to update your password. Please try again."
+#~ msgstr "Nie udało się zaktualizować Twojego hasła. Proszę spróbuj ponownie."
+
+#~ msgid "Not registered?"
+#~ msgstr "Nie posiadasz konta?"
+
+#~ msgid "Sign up!"
+#~ msgstr "Zarejestruj się!"
