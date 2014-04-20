@@ -9,7 +9,12 @@ $form->prepare();
 <?php if ($imageUploaded): ?>
     <div class="alert alert-success">Image Successfully Uploaded</div>
 <?php endif; ?>
-<a href="<?php echo $this->url('zfcuser'); ?>" class="btn btn-default">Back to my Profile</a><br/><br/>
+<?php if ($user->getId() == $this->zfcUserIdentity()->getId()): ?>
+    <a href="<?php echo $this->url('zfcuser'); ?>" class="btn btn-default">
+        Back to my Profile
+    </a>
+    <br/><br/>
+<?php endif; ?>
 <?php echo $this->form()->openTag($form); ?>
 <?php echo $this->formElement($form->get('image')) . $this->formElementErrors($form->get('image')); ?>
 <br/>
