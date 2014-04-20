@@ -1,17 +1,17 @@
 <?php
 
-$title = 'Image Upload - ' . $user->getUserName();
+$title = $this->translate('Image Upload - ') . $user->getUserName();
 $title = $this->escapeHtml($title);
 $this->headTitle($title);
 $form->prepare();
 ?>
 <h2><?php echo $title; ?></h2>
 <?php if ($imageUploaded): ?>
-    <div class="alert alert-success">Image Successfully Uploaded</div>
+    <div class="alert alert-success"><?php echo $this->translate("Image Successfully Uploaded") ?></div>
 <?php endif; ?>
 <?php if ($user->getId() == $this->zfcUserIdentity()->getId()): ?>
     <a href="<?php echo $this->url('zfcuser'); ?>" class="btn btn-default">
-        Back to my Profile
+        <?php echo $this->translate('Back to my Profile'); ?>
     </a>
     <br/><br/>
 <?php endif; ?>
