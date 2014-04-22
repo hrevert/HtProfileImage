@@ -91,6 +91,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
      */
     public function getUserImage(UserInterface $user, $filterAlias = null)
     {
+        $this->getEventManager()->trigger(
+            __FUNCTION__,
+            $this,
+            ['user' => $user, 'filterAlias' => $filterAlias]
+        );
         if ($this->getStorageModel()->userImageExists($user)) {
             $fileName = $this->getStorageModel()->getUserImage($user);
         } else {
@@ -127,7 +132,7 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             );
         }
         $this->getEventManager()->trigger(
-            __FUNCTION__,
+            __FUNCTION__ . '.post',
             $this,
             ['user' => $user, 'image' => $image, 'fileName' => $fileName, 'filterAlias' => $filterAlias]
         );
