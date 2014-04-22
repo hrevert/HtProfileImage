@@ -15,7 +15,7 @@ class Module
     {
         $app = $e->getApplication();
         $sharedManager = $app->getEventManger()->getSharedManger();
-        $sharedManager->attach('HtProfileImage\Service\ProfileImageService', 'getUserImage', function ($event) {
+        $sharedManager->attach('HtProfileImage\Service\ProfileImageService', 'storeImage', function ($event) {
             $user = $event->getParam('user');
             // Now, check if the identity has access to this user
         });
@@ -39,7 +39,7 @@ class Module
     {
         $app = $e->getApplication();
         $sharedManager = $app->getEventManger()->getSharedManger();
-        $sharedManager->attach('HtProfileImage\Service\ProfileImageService', 'getUserImage', function ($event) {
+        $sharedManager->attach('HtProfileImage\Service\ProfileImageService', 'storeImage', function ($event) {
             $user = $event->getParam('user');
             $authorizationService = $app->getServiceManager()->get('ZfcRbac\Service\AuthorizationService');
             if (!$authorizationService->isGranted('user.image.upload', $user)) {
