@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: HtProfileImage\n"
-"Report-Msgid-Bugs-To: zf-devteam@zend.com\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-21 09:53+0100\n"
 "PO-Revision-Date: 2014-04-25 20:55+0100\n"
 "Last-Translator: Stijnhau <stijnhau@gmail.com>\n"
