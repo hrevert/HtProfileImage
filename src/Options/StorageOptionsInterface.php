@@ -11,8 +11,4 @@ interface StorageOptionsInterface
     public function setStorageFilter($storageFilter);
 
     public function getStorageFilter();
-
-    public function setDisplayFilter($displayFilter);
-
-    public function getDisplayFilter();
 }
