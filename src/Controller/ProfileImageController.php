@@ -97,6 +97,9 @@ class ProfileImageController extends AbstractActionController
 
     public function deleteAction()
     {
+        if (!$this->getOptions()->getEnableImageDelete()) {
+            return $this->notFoundAction();
+        }
         $user = $this->getUser();
         if (!$user) {
             return $this->notFoundAction();
