@@ -1,5 +1,5 @@
 <div style="float:left; padding-right:16px;"><?php echo $this->htProfileImage($this->zfcUserIdentity()) ?></div>
-<h3>Hello, <?php echo $this->zfcUserDisplayName() ?>!</h3>
-<a href="<?php echo $this->url('zfcuser/logout') ?>">[Sign Out]</a>
+<h3><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?>!</h3>
+<a href="<?php echo $this->url('zfcuser/logout') ?>">[<?php echo $this->translate('Sign Out'); ?>]</a>
 <div style="clear:both;"></div>
-<a href="<?php echo $this->url('zfcuser/htimageupload') ?>">Upload Image</a>
+<a href="<?php echo $this->url('zfcuser/htimageupload') ?>"><?php echo $this->translate('Upload image'); ?></a>
