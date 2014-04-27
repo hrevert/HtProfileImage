@@ -152,6 +152,16 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function deleteUserImage(UserInterface $user)
+    {
+        $this->getEventManager()->trigger(__FUNCTION__, $this, ['user' => $user]);
+        $this->getStorageModel()->deleteUserImage($user);
+        $this->getEventManager()->trigger(__FUNCTION__ . '.post', $this, ['user' => $user]);
+    }
+
+    /**
      * Gets options
      *
      * @return \HtProfileImage\Options\ModuleOptionsInterface

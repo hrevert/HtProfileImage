@@ -32,6 +32,10 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 
     protected $enableInterUserImageUpload = false;
 
+    protected $enableImageDelete = false;
+
+    protected $postImageDeleteRoute = 'zfcuser';
+
     public function setUploadDirectory($uploadDirectory)
     {
         $this->uploadDirectory = $uploadDirectory;
@@ -160,5 +164,25 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     public function getEnableInterUserImageUpload()
     {
         return $this->enableInterUserImageUpload;
+    }
+
+    public function setEnableImageDelete($enableImageDelete)
+    {
+        $this->enableImageDelete = (bool) $enableImageDelete;
+    }
+
+    public function getEnableImageDelete()
+    {
+        return $this->enableImageDelete;
+    }
+
+    public function setPostImageDeleteRoute($postImageDeleteRoute)
+    {
+        $this->postImageDeleteRoute = (bool) $postImageDeleteRoute;
+    }
+
+    public function getPostImageDeleteRoute()
+    {
+        return $this->postImageDeleteRoute;
     }
 }
