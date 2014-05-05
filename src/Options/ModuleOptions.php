@@ -178,7 +178,7 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 
     public function setPostImageDeleteRoute($postImageDeleteRoute)
     {
-        $this->postImageDeleteRoute = (bool) $postImageDeleteRoute;
+        $this->postImageDeleteRoute = $postImageDeleteRoute;
     }
 
     public function getPostImageDeleteRoute()
