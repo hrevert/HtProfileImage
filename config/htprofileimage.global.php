@@ -134,7 +134,7 @@ $settings = [
      *
      * Default: zfcuser
      */
-     // 'post_image_delete_route' => zfcuser,
+     // 'post_image_delete_route' => 'zfcuser',
 ];
 
 /**
