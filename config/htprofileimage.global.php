@@ -121,6 +121,20 @@ $settings = [
      * Default: false
      */
     //'enable_inter_user_image_upload' => false,
+
+    /**
+     * Enable deleting of images?
+     *
+     * Default: false
+     */
+     // 'enable_image_delete' => true,
+
+    /**
+     * Post Image Delete Route
+     *
+     * Default: zfcuser
+     */
+     // 'post_image_delete_route' => zfcuser,
 ];
 
 /**
