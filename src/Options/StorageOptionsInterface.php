@@ -11,4 +11,8 @@ interface StorageOptionsInterface
     public function setStorageFilter($storageFilter);
 
     public function getStorageFilter();
+
+    public function setEnableImageDelete($enableImageDelete);
+
+    public function getEnableImageDelete();
 }

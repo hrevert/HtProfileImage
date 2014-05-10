@@ -40,24 +40,10 @@ class ProfileImageController extends AbstractActionController
      */
     public function uploadAction()
     {
-        $authenticationService = $this->getServiceLocator()->get('zfcuser_auth_service');
-        if (!$authenticationService->hasIdentity()) {
-            return $this->redirect()->toRoute('zfcuser');
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->notFoundAction();
         }
-        $user = $authenticationService->getIdentity();
-
-        $userId = $this->params()->fromRoute('userId', null);
-        if ($userId !== null) {
-            $currentUser = $user;
-            $user = $this->getUserMapper()->findById($userId);
-            if (!$user) {
-                return $this->notFoundAction();
-            }
-            if (!$this->getOptions()->getEnableInterUserImageUpload() && ($user->getId() !== $currentUser->getId())) {
-                return $this->notFoundAction();
-            }
-        }
-
         $options = $this->getOptions();
         $form = $this->getServiceLocator()->get('HtProfileImage\ProfileImageForm');
         $request = $this->getRequest();
@@ -107,6 +93,43 @@ class ProfileImageController extends AbstractActionController
         $image = $this->profileImageService->getUserImage($user, $filter);
 
         return new ImageModel($image);
+    }
+
+    public function deleteAction()
+    {
+        if (!$this->getOptions()->getEnableImageDelete()) {
+            return $this->notFoundAction();
+        }
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->notFoundAction();
+        }
+        $this->profileImageService->deleteUserImage($user);
+
+        return call_user_func_array([$this->redirect(), 'toRoute'], (array) $this->getOptions()->getPostImageDeleteRoute());
+    }
+
+    protected function getUser()
+    {
+        $authenticationService = $this->getServiceLocator()->get('zfcuser_auth_service');
+        if (!$authenticationService->hasIdentity()) {
+            return $this->redirect()->toRoute('zfcuser');
+        }
+        $user = $authenticationService->getIdentity();
+
+        $userId = $this->params()->fromRoute('userId', null);
+        if ($userId !== null) {
+            $currentUser = $user;
+            $user = $this->getUserMapper()->findById($userId);
+            if (!$user) {
+                return $this->notFoundAction();
+            }
+            if (!$this->getOptions()->getEnableInterUserImageUpload() && ($user->getId() !== $currentUser->getId())) {
+                return $this->notFoundAction();
+            }
+        }
+        
+        return $user;         
     }
 
     /**

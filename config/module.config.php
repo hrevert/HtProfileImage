@@ -39,6 +39,16 @@ return [
                             ]
                         ]
                     ],
+                    'htimagedelete' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/delete-image[/:userId]',
+                            'defaults' => [
+                                'controller' => 'HtProfileImage\ProfileImage',
+                                'action' => 'delete'
+                            ]
+                        ]
+                    ],
                 ]
             ]
         ]

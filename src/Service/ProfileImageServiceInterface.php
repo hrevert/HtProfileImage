@@ -22,4 +22,12 @@ interface ProfileImageServiceInterface
      * @return \Imagine\Image\ImageInterface
      */
     public function getUserImage(UserInterface $user, $filterAlias = null);
+
+    /**
+     * Deletes if user image exists
+     *
+     * @param  UserInterface $user
+     * @return void
+     */
+    public function deleteUserImage(UserInterface $user);
 }
