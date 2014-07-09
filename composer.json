@@ -30,7 +30,7 @@
         "zendframework/zend-validator": "~2.1",
         "zendframework/zend-view": "~2.1",
         "zf-commons/zfc-user": ">=0.1,<2.0",
-        "hrevert/ht-img-module": "0.0.*",
+        "hrevert/ht-img-module": "~0.0.4, <0.2",
         "ext-fileinfo": "*"
     },
     "autoload": {
