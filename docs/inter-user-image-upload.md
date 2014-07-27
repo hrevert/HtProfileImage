@@ -24,7 +24,7 @@ class Module
 
 ```
 
-If you user [ZfcRbac](https://github.com/ZF-Commons/zfc-rbac), you can do something like this:
+If you use [ZfcRbac](https://github.com/ZF-Commons/zfc-rbac), you can do something like this:
 ```php
 <?php
 
