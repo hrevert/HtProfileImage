@@ -63,11 +63,11 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
             $filter->setOverwrite(true);
             $filter->filter($files['image']);
             $newFileName = $this->getStorageModel()->getUserImage($user);
-            $filterAlias = $this->getOptions()->getStorageFilter();
-            if (!$filterAlias) {
-                rename($uploadTarget, $newFileName); //no filter alias given, just rename
+            $filterServiceName = $this->getOptions()->getStorageFilter();
+            if (!$filterServiceName) {
+                rename($uploadTarget, $newFileName); //no filter service name given, just rename
             } else {
-                $filter = $this->getFilterManager()->getFilter($filterAlias);
+                $filter = $this->getFilterManager()->getFilter($filterServiceName);
                 $image = $this->getImagine()->open($uploadTarget);
                 try {
                     $image = $filter->apply($image); // resize the image
@@ -89,12 +89,12 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
     /**
      * {@inheritDoc}
      */
-    public function getUserImage(UserInterface $user, $filterAlias = null)
+    public function getUserImage(UserInterface $user, $filterServiceName = null)
     {
         $this->getEventManager()->trigger(
             __FUNCTION__,
             $this,
-            ['user' => $user, 'filterAlias' => $filterAlias]
+            ['user' => $user, '$filterServiceName' => $filterServiceName]
         );
         if ($this->getStorageModel()->userImageExists($user)) {
             $fileName = $this->getStorageModel()->getUserImage($user);
@@ -117,24 +117,24 @@ class ProfileImageService extends EventProvider implements ProfileImageServiceIn
         }
 
         $image = $this->getImagine()->open($fileName);
-        if (!$filterAlias) {
-            $filterAlias = $this->getOptions()->getDisplayFilter();
+        if (!$filterServiceName) {
+            $filterServiceName = $this->getOptions()->getDisplayFilter();
         }
-        if ($filterAlias) {
-            $filter = $this->getFilterManager()->getFilter($filterAlias);
+        if ($filterServiceName) {
+            $filter = $this->getFilterManager()->getFilter($filterServiceName);
             $image = $filter->apply($image);
         }
         if ($this->getOptions()->getEnableCache()) {
             $this->getCacheManager()->createCache(
                 $user,
-                $filterAlias,
+                $filterServiceName,
                 $image
             );
         }
         $this->getEventManager()->trigger(
             __FUNCTION__ . '.post',
             $this,
-            ['user' => $user, 'image' => $image, 'fileName' => $fileName, 'filterAlias' => $filterAlias]
+            ['user' => $user, 'image' => $image, 'fileName' => $fileName, '$filterServiceName' => $filterServiceName]
         );
 
         return $image;
