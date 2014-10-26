@@ -7,6 +7,7 @@ use Zend\View\Model;
 use Zend\Mvc\Controller\AbstractActionController;
 use HtProfileImage\Service\ProfileImageServiceInterface;
 use HtImgModule\View\Model\ImageModel;
+use Negotiation\FormatNegotiator;
 
 class ProfileImageController extends AbstractActionController
 {
@@ -49,8 +50,13 @@ class ProfileImageController extends AbstractActionController
         $request = $this->getRequest();
         $imageUploaded = false;
         if ($request->isPost()) {
+            $negotiator   = new FormatNegotiator();
+            $format = $negotiator->getBest(
+                $request->getHeader('Accept')->getFieldValue(),
+                ['application/json', 'text/html']
+            );
             if ($this->profileImageService->storeImage($user, $request->getFiles()->toArray())) {
-                if ($request->isXmlHttpRequest()) {
+                if ($format === 'application/json') {
                     return new Model\JsonModel([
                         'uploaded' => true
                     ]);
@@ -59,7 +65,9 @@ class ProfileImageController extends AbstractActionController
                 }
                 $imageUploaded = true;
             } else {
-                if ($request->isXmlHttpRequest()) {
+                $response = $this->getResponse();
+                $response->setStatus(400);
+                if ($format === 'application/json') {
                     return new Model\JsonModel([
                         'error' => true,
                         'messages' => $form->getMessages()
