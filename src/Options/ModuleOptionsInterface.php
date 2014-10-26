@@ -18,4 +18,12 @@ interface ModuleOptionsInterface extends
     public function setEnableInterUserImageUpload($enableInterUserImageUpload);
 
     public function getEnableInterUserImageUpload();
+
+    public function setEnableImageDelete($enableImageDelete);
+
+    public function getEnableImageDelete();
+
+    public function setPostImageDeleteRoute($postImageDeleteRoute);
+
+    public function getPostImageDeleteRoute();
 }

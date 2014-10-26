@@ -2,7 +2,6 @@
 
 namespace HtProfileImage\Controller;
 
-use HtProfileImage\Form\ProfileImageForm;
 use Zend\View\Model;
 use Zend\Mvc\Controller\AbstractActionController;
 use HtProfileImage\Service\ProfileImageServiceInterface;
@@ -41,12 +40,18 @@ class ProfileImageController extends AbstractActionController
      */
     public function uploadAction()
     {
+        $authenticationService = $this->getServiceLocator()->get('zfcuser_auth_service');
+        if (!$authenticationService->hasIdentity()) {
+            return $this->redirect()->toRoute('zfcuser');
+        }
+
         $user = $this->getUser();
         if (!$user) {
             return $this->notFoundAction();
         }
         $options = $this->getOptions();
         $form = $this->getServiceLocator()->get('HtProfileImage\ProfileImageForm');
+        /** @var \Zend\Http\Request $request */
         $request = $this->getRequest();
         $imageUploaded = false;
         if ($request->isPost()) {
@@ -66,7 +71,8 @@ class ProfileImageController extends AbstractActionController
                 $imageUploaded = true;
             } else {
                 $response = $this->getResponse();
-                $response->setStatus(400);
+                /** @var \Zend\Http\Response $response */
+                $response->setStatusCode(400);
                 if ($format === 'application/json') {
                     return new Model\JsonModel([
                         'error' => true,
@@ -108,6 +114,12 @@ class ProfileImageController extends AbstractActionController
         if (!$this->getOptions()->getEnableImageDelete()) {
             return $this->notFoundAction();
         }
+
+        $authenticationService = $this->getServiceLocator()->get('zfcuser_auth_service');
+        if (!$authenticationService->hasIdentity()) {
+            return $this->redirect()->toRoute('zfcuser');
+        }
+
         $user = $this->getUser();
         if (!$user) {
             return $this->notFoundAction();
@@ -117,12 +129,13 @@ class ProfileImageController extends AbstractActionController
         return call_user_func_array([$this->redirect(), 'toRoute'], (array) $this->getOptions()->getPostImageDeleteRoute());
     }
 
+    /**
+     * @return \ZfcUser\Entity\UserInterface|null
+     */
     protected function getUser()
     {
         $authenticationService = $this->getServiceLocator()->get('zfcuser_auth_service');
-        if (!$authenticationService->hasIdentity()) {
-            return $this->redirect()->toRoute('zfcuser');
-        }
+        /** @var \ZfcUser\Entity\UserInterface $user */
         $user = $authenticationService->getIdentity();
 
         $userId = $this->params()->fromRoute('userId', null);
@@ -130,13 +143,13 @@ class ProfileImageController extends AbstractActionController
             $currentUser = $user;
             $user = $this->getUserMapper()->findById($userId);
             if (!$user) {
-                return $this->notFoundAction();
+                return null;
             }
             if (!$this->getOptions()->getEnableInterUserImageUpload() && ($user->getId() !== $currentUser->getId())) {
-                return $this->notFoundAction();
+                return null;
             }
         }
-        
+
         return $user;         
     }
 
