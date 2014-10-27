@@ -61,7 +61,7 @@ class ProfileImageController extends AbstractActionController
                 ['application/json', 'text/html']
             );
             if ($this->profileImageService->storeImage($user, $request->getFiles()->toArray())) {
-                if ($format === 'application/json') {
+                if ($format->getValue() === 'application/json') {
                     return new Model\JsonModel([
                         'uploaded' => true
                     ]);
@@ -73,7 +73,7 @@ class ProfileImageController extends AbstractActionController
                 $response = $this->getResponse();
                 /** @var \Zend\Http\Response $response */
                 $response->setStatusCode(400);
-                if ($format === 'application/json') {
+                if ($format->getValue() === 'application/json') {
                     return new Model\JsonModel([
                         'error' => true,
                         'messages' => $form->getMessages()
