@@ -141,8 +141,5 @@ $settings = [
  * You do not need to edit below this line
  */
 return [
-    'htprofileimage' => $settings,
-    'zfcuser' => [
-        'user_entity_class' => (isset($settings['enable_gender']) && $settings['enable_gender'] == true) ? "HtProfileImage\Entity\User" : "ZfcUser\Entity\User",
-    ]
+    'htprofileimage' => $settings
 ];
